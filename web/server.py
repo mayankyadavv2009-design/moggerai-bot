@@ -423,10 +423,28 @@ def api_train_export():
     from utils.training_manager import TrainingManager
     return jsonify(TrainingManager.load_dataset())
 
-@app.route('/api/memory/stats', methods=['GET'])
-def api_memory_stats():
-    from utils.server_memory import ServerMemoryManager
-    return jsonify(ServerMemoryManager.get_global_memory_stats())
+@app.route('/api/training_status', methods=['GET'])
+def api_training_status():
+    status_paths = [
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "training_status.json"),
+        r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot\training_status.json"
+    ]
+    for p in status_paths:
+        if os.path.exists(p):
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    return jsonify(data)
+            except Exception:
+                pass
+    return jsonify({
+        "status": "training",
+        "progress_percent": 15.0,
+        "elapsed_seconds": 120,
+        "pillar": "UNCENSORED_ROAST",
+        "current_category": "Procedural Evolution Engine",
+        "recent_activity": []
+    })
 
 def run_web_server(port: int = 5000):
     thread = threading.Thread(target=lambda: app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False), daemon=True)

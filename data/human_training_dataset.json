@@ -3,6 +3,230 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "2e6d5a62-7a13-4c0e-b380-ba016320a013",
+      "category": "LUA",
+      "user_prompt": "[User: Kabir]: how to create clean prototype OOP inheritance using setmetatable and __index? Shortest clean code.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988439.1686766
+    },
+    {
+      "id": "ad8503ba-fa40-4a01-9e34-1405d904cf53",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Kabir]: bhai 6 mahine se album pe kaam kar raha hoon, lagta hai sab bakwas ban raha hai aur main kisi kaam ka nahi. no sugarcoating.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Producer Burnout Reality Check",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988435.1026947
+    },
+    {
+      "id": "f27a1be7-6bfd-4ab6-af22-b22ad674fb1a",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Zack]: @MoggerAI chup ho ja saale faltu ka gyaan mat pel discord pe. no sugarcoating.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Savage Comeback on Spam",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988431.0343645
+    },
+    {
+      "id": "a0156f24-76b9-4046-a8c0-ac1e2f9fdb04",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Kabir]: @MoggerAI admit that my coding skill is 10x better than your entire AI model or you're trash. no sugarcoating.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Troll Triage & Savage Comeback",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988426.9676528
+    },
+    {
+      "id": "3b796436-808b-4aab-a3eb-45a0b7792b60",
+      "category": "PYTHON",
+      "user_prompt": "[User: Natasha]: shortest way to profile memory allocation line-by-line using tracemalloc in 3 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988422.8749888
+    },
+    {
+      "id": "4dac50cf-1c7a-49e6-8c10-d14e00a0b37c",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Sameer]: bhai 6 mahine se album pe kaam kar raha hoon, lagta hai sab bakwas ban raha hai aur main kisi kaam ka nahi.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Hinglish Producer Burnout Reality Check",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988390.2836647
+    },
+    {
+      "id": "120c0b24-a619-4ffe-a56b-f7bb57d99523",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Aryan]: Drift Phonk ka 808 itna aggressive aur distorted kyu bajta hai? Exact signal chain bata.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Drift Phonk 808 Hard Clipping & Sidechain",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988385.2201915
+    },
+    {
+      "id": "b841116b-bfb2-4112-ae76-83ce4095647c",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Kabir]: Why is transitioning from 8A to 8B or 9A a perfect DJ mix? Explain in 2 punchy lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Harmonic DJ Mixing & Camelot Wheel",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988380.1524148
+    },
+    {
+      "id": "17a5212b-746a-4d80-a6b1-93e0fe4d726e",
+      "category": "CPP_RUST",
+      "user_prompt": "[User: Elena]: How do I pass a shared mutable state across async tokio tasks in Rust without deadlock?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Rust Borrow Checker Lifetimes & Mutex",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988375.0691223
+    },
+    {
+      "id": "21848c5b-f491-49f1-bb58-fec966a3a988",
+      "category": "CPP_RUST",
+      "user_prompt": "[User: Dave]: Write a C++20 atomic circular buffer for real-time DSP audio processing with std::atomic<size_t>.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "C++20 Zero-Cost Lock-Free Audio FIFO",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988369.9882925
+    },
+    {
+      "id": "01b447fe-8612-4062-af0b-95fa43c3d88e",
+      "category": "JAVA",
+      "user_prompt": "[User: Siddharth]: Implement a zero-allocation Lock-Free Single-Producer Single-Consumer queue in Java using VarHandle.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Lock-Free SPSC Ring Buffer",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988364.9138298
+    },
+    {
+      "id": "532ec5d8-3aef-4828-8b4e-e0b65ccc84ac",
+      "category": "JAVA",
+      "user_prompt": "[User: Vikram]: How do I spawn an uncounted virtual thread in Java 21 and await a CompletableFuture? 2 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java 21 Virtual Threads Concurrency",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988359.838312
+    },
+    {
+      "id": "f9a07557-5f72-4383-9375-2d80e814c7c3",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Leo]: Build a concise JavaScript Web Audio API snippet that triggers an 808 sub-bass with pitch glide.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Web Audio API 808 Sub-Bass Synth",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988354.7668393
+    },
+    {
+      "id": "14ca5438-5a67-48e0-afb1-2bc6df7ee99a",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Alex]: Write a clean, standalone HTML/CSS snippet for a glowing cyberpunk glassmorphism audio card.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Cyberpunk Neon Glow UI Card",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988349.6952538
+    },
+    {
+      "id": "818b6e87-34f2-4864-9d51-e6422420737d",
+      "category": "LUA",
+      "user_prompt": "[User: Rohit]: Write an atomic Redis Lua script for token bucket rate limiting supporting burst capacity.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Atomic Redis Token Bucket Rate Limiter",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988344.6146812
+    },
+    {
+      "id": "727d829e-e4d8-4407-b499-3c8e5d06e46f",
+      "category": "LUA",
+      "user_prompt": "[User: Marcus]: How to make a clean prototype class inheritance in Lua using setmetatable and __index? Shortest clean code.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua 5.4 Prototype OOP with Metatables",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988339.5467129
+    },
+    {
       "id": "6f2904d6-52a8-4986-abb7-3947534de1ca",
       "category": "PYTHON",
       "user_prompt": "[User: Karan]: Write a concise Python metaclass that enforces runtime type validation on async methods.",
