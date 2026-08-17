@@ -26,6 +26,8 @@ echo.
 
 echo [1/4] Initializing Git Repository...
 "!GIT_EXE!" init
+"!GIT_EXE!" config user.name "Mayank"
+"!GIT_EXE!" config user.email "mayankyadav@users.noreply.github.com"
 
 echo [2/4] Staging Cloud Files...
 "!GIT_EXE!" add .
