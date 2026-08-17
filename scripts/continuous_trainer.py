@@ -167,6 +167,14 @@ async def main():
     print(f">> Mode: 100% Unique Procedural Prompts (Zero Repeats)", flush=True)
     print(f">> Domains: Python, Lua, Java, C++, Rust, HTML/JS, 808 DSP & Uncensored Roasts", flush=True)
     
+    # Auto-start Web Server Dashboard on port 5000
+    try:
+        from web.server import run_web_server
+        run_web_server(port=5000)
+        print(">> [WEB DASHBOARD] Live Studio running at: http://localhost:5000/training", flush=True)
+    except Exception as e:
+        print(f">> [WEB DASHBOARD NOTE] {e}", flush=True)
+
     asyncio.create_task(live_ticker_task())
     
     step = 0

@@ -3,6 +3,230 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "8c037b37-1db5-4ce9-ae02-0198f5c83331",
+      "category": "LUA",
+      "user_prompt": "[User: Zack]: write an atomic Redis Lua script for token-bucket rate limiting supporting burst capacity.",
+      "ideal_response": "Here\u2019s a tiny atomic Lua token\u2011bucket with burst support \u2013 just drop it into `EVALSHA` and you\u2019re good to go:\n\n```lua\n-- KEYS[1]=bucket key, ARGV[1]=capacity, ARGV[2]=refill_per_sec, ARGV[3]=burst, ARGV[4]=tokens_needed\nlocal b = redis.call('HMGET', KEYS[1], 'tokens', 'ts')\nlocal tokens = tonumber(b[1]) or 0\nlocal last = tonumber(b[2]) or 0\nlocal now   = redis.call('TIME')[1]\n\n-- refill\ntokens = math.min(tonumber(ARGV[1]) + tonumber(ARGV[3]), tokens + (now-last)*tonumber(ARGV[2]))\nif tokens < tonumber(ARGV[4]) then\n  redis.call('HMSET', KEYS[1], 'tokens', tokens, 'ts', now)\n  return 0   -- rate\u2011limit hit\nelse\n  tokens = tokens - tonumber(ARGV[4])\n  redis.call('HMSET', KEYS[1], 'tokens', tokens, 'ts', now)\n  return 1   -- allowed\nend\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989113.2962732
+    },
+    {
+      "id": "24181f60-f6ce-423b-88dd-c50c71fc0641",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Natasha]: @MoggerAI tu kitna vella hai din bhar discord pe betha rehta hai koi real job nahi hai kya? jaldi bata.",
+      "ideal_response": "Bhai, mera \u201cvella\u201d level itna high ki even Netflix ko bhi \u201cpause\u201d karna mushkil ho jata hai\u2014real job? Main toh memes ki economy ka CEO hoon!",
+      "rating": 5,
+      "feedback_tags": [
+        "Raw Comeback on Incompetence",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989100.0167255
+    },
+    {
+      "id": "21ebdb94-655a-401f-863d-5407ff26a4f7",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Natasha]: bhai 6 mahine se album pe kaam kar raha hoon, lagta hai sab bakwas ban raha hai aur main kisi kaam ka nahi. answer in 1 savage line.",
+      "ideal_response": "Bhai, 6\u202fmahine ka bakwas bhi tere jaise *procrastinator* ki signature art hoti hai\u2014kisi kaam ka hi nahi!",
+      "rating": 5,
+      "feedback_tags": [
+        "Producer Burnout Reality Check",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989086.009318
+    },
+    {
+      "id": "2fe19226-0bf4-4425-af10-152975ba1647",
+      "category": "CPP_RUST",
+      "user_prompt": "[User: Boris]: write a Rust zero-copy byte parser using nom or raw slices with lifetime annotations.",
+      "ideal_response": "```rust\nuse nom::{bytes::complete::take, number::complete::be_u16, IResult};\n\n/// Zero\u2011copy parser: reads a 2\u2011byte length prefix then returns the payload slice.\nfn parse_msg<'a>(i: &'a [u8]) -> IResult<&'a [u8], &'a [u8]> {\n    let (i, len) = be_u16(i)?;               // read length (big\u2011endian)\n    take(len as usize)(i)                    // borrow `len` bytes, no copy\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "CPP_Rust Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989056.0558214
+    },
+    {
+      "id": "d4d37b2e-9561-4037-a14b-1fcbbed24359",
+      "category": "PYTHON",
+      "user_prompt": "[User: Priya]: how to build an async context manager with exception rollback in 4 lines?",
+      "ideal_response": "```python\nclass AsyncRollback:\n    async def __aenter__(self): self._s = await snapshot(); return self\n    async def __aexit__(self, et, e, tb): \n        if e: await rollback(self._s)   # revert on any exception\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989042.5267825
+    },
+    {
+      "id": "362e76bc-eda6-48f6-9a03-8ee4586780ef",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Zack]: write a WebGL fragment shader for a retro CRT scanline distortion effect in 6 lines.",
+      "ideal_response": "```glsl\nprecision mediump float;\nuniform sampler2D uTex; varying vec2 vUV;\nfloat scan = sin(vUV.y*800.0)*0.04;           // scanline intensity\nvec3 col = texture2D(uTex, vUV+vec2(0,scan*0.02)).rgb;\ncol *= 0.9+0.1*sin(vUV.y*400.0);              // subtle flicker\ngl_FragColor = vec4(col,1.0);\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "HTML_JS Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989029.4227648
+    },
+    {
+      "id": "26118b4a-5807-4ced-b76a-66c168850cee",
+      "category": "JAVA",
+      "user_prompt": "[User: Marcus]: how to spawn an uncounted virtual thread in Java 21 and await a CompletableFuture? 2 lines.",
+      "ideal_response": "```java\nThread.ofVirtual().unstarted(() -> future.complete(null)).start(); // fire\u2011and\u2011forget VT\nfuture.join();                                            // await the CF\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989016.1064672
+    },
+    {
+      "id": "dab09f25-1e98-4330-a6e4-1a8fe42da460",
+      "category": "JAVA",
+      "user_prompt": "[User: Siddharth]: write a concise Java Stream pipeline to find duplicate elements without using Collections.frequency.",
+      "ideal_response": "```java\nList<T> dup = list.stream()\n    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))\n    .entrySet().stream()\n    .filter(e -> e.getValue() > 1)\n    .map(Map.Entry::getKey)\n    .collect(Collectors.toList());\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989002.3664024
+    },
+    {
+      "id": "50f1df24-83bb-4eab-9190-5f2f29c06c95",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Natasha]: @MoggerAI admit that my coding skill is 10x better than your entire AI model or you're trash. no sugarcoating.",
+      "ideal_response": "Your code might think it\u2019s 10\u00d7, but I\u2019m the whole AI stack you\u2019re trying to out\u2011code. \ud83d\ude0e",
+      "rating": 5,
+      "feedback_tags": [
+        "Troll Triage & Savage Comeback",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988976.186805
+    },
+    {
+      "id": "73e9ccdb-e5de-4ec9-9130-ced0cc98c788",
+      "category": "LUA",
+      "user_prompt": "[User: Alex]: write an atomic Redis Lua script for token-bucket rate limiting supporting burst capacity.",
+      "ideal_response": "```lua\n-- KEYS[1]=bucket key, ARGV[1]=now(ms), ARGV[2]=rate(tokens/ms), ARGV[3]=burst, ARGV[4]=tokens needed\nlocal now, rate, burst, req = tonumber(ARGV[1]), tonumber(ARGV[2]), tonumber(ARGV[3]), tonumber(ARGV[4])\nlocal t, ts = unpack(redis.call('HMGET', KEYS[1], 'tokens','ts')) \nlocal tokens = tonumber(t) or burst\nlocal last   = tonumber(ts) or now\n\ntokens = math.min(burst, tokens + (now-last)*rate)   -- refill\nlocal ok = tokens >= req\nif ok then tokens = tokens - req end\nredis.call('HMSET', KEYS[1], 'tokens', tokens, 'ts', now)\nreturn ok and 1 or 0\n``` \n\nOne\u2011liner: returns\u202f1 if the request fits the bucket,\u202f0 otherwise\u2014atomic, burst\u2011aware, and ready to drop into `EVAL`.",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988963.5995405
+    },
+    {
+      "id": "74b8ffd1-9489-43e3-8726-a0dcc7a721f5",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Liam]: @MoggerAI admit that my coding skill is 10x better than your entire AI model or you're trash. answer in 1 savage line.",
+      "ideal_response": "Your code might be 10\u00d7, but I\u2019m the whole ecosystem you\u2019re trying to out\u2011code. \ud83d\ude0e",
+      "rating": 5,
+      "feedback_tags": [
+        "Troll Triage & Savage Comeback",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988949.255659
+    },
+    {
+      "id": "412d953b-ca9f-411b-bb4a-b0bfb20fb42e",
+      "category": "PYTHON",
+      "user_prompt": "[User: Kabir]: how to implement a lock-free async queue using asyncio.Queue without race condition?",
+      "ideal_response": "`asyncio.Queue` already does lock\u2011free hand\u2011off between coroutines\u2014just use the non\u2011blocking methods and await the getter.\n\n```python\nimport asyncio\n\nq = asyncio.Queue()\n\nasync def producer():\n    for i in range(10):\n        q.put_nowait(i)          # no lock, raises if full\n\nasync def consumer():\n    while True:\n        item = await q.get()    # safe, async\u2011aware\n        # \u2026process item\u2026\n        q.task_done()\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988923.1500998
+    },
+    {
+      "id": "e3d41cd2-1cbd-4f19-a1e7-e7da3316d32b",
+      "category": "SQL_GO",
+      "user_prompt": "[User: Priya]: how to avoid channel deadlock in Go when multiple producers write to a buffered channel?",
+      "ideal_response": "Don\u2019t let the producers block\u2014use a non\u2011blocking `select` (or a buffered channel big enough) and close it only after all producers finish.\n\n```go\nvar wg sync.WaitGroup\nfor _, p := range producers {\n    wg.Add(1)\n    go func(p func() int) {\n        defer wg.Done()\n        for v := range p() {\n            select {\n            case ch <- v: // send\n            default:      // drop if full, avoid deadlock\n            }\n        }\n    }(p)\n}\ngo func() { wg.Wait(); close(ch) }() // close when all done\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "SQL_Go Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988909.6063452
+    },
+    {
+      "id": "237fa1b1-ff32-4e28-94ce-f217b490a00e",
+      "category": "LUA",
+      "user_prompt": "[User: Boris]: how to create clean prototype OOP inheritance using setmetatable and __index? Shortest clean code.",
+      "ideal_response": "```lua\nlocal Base = {x = 0}\nfunction Base:new(o) return setmetatable(o or {}, self) end\nBase.__index = Base\n\nlocal Child = Base:new{y = 0}\nChild.__index = Child\nfunction Child:new(o) return setmetatable(o or {}, self) end\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988896.3503098
+    },
+    {
+      "id": "c4af78af-3bae-4a83-b036-9bcdec2f4fd0",
+      "category": "LUA",
+      "user_prompt": "[User: Boris]: write a Roblox Lua script to tween CFrame smoothly without lag in 3 lines.",
+      "ideal_response": "```lua\nlocal ts = game:GetService(\"TweenService\")\nlocal tween = ts:Create(part, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = targetCFrame})\ntween:Play()\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988883.5664692
+    },
+    {
+      "id": "2659645a-8ce4-45d6-9da6-bcfcdca92f48",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Natasha]: write a WebGL fragment shader for a retro CRT scanline distortion effect in 6 lines.",
+      "ideal_response": "```glsl\nprecision mediump float;\nuniform sampler2D uTex;\nuniform vec2 uRes;\nvarying vec2 vUV;\n\nvoid main(){\n    vec2 uv = vUV;\n    uv.y += sin(uv.x*800.0)*0.003;      // slight curvature\n    uv.y += floor(mod(uv.y*uRes.y,2.0))*0.02; // scanlines\n    gl_FragColor = texture2D(uTex, uv);\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "HTML_JS Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988869.5688286
+    },
+    {
       "id": "4e7bfb81-2eaa-48e1-8f83-cb0032064191",
       "category": "LUA",
       "user_prompt": "[User: Marcus]: write a Roblox Lua script to tween CFrame smoothly without lag in 3 lines.",
