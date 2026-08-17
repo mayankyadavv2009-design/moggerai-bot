@@ -1,0 +1,33 @@
+{
+  "status": "training",
+  "duration_hours": 1,
+  "duration_minutes": 60,
+  "mode": "Short & Punchy AI Chatbot \u2022 Zero Bloat \u2022 Peak Wit",
+  "model": "Groq Ultra-Fast API (Short Message Tuned)",
+  "persona": "MoggerAI Claude Fable 5 (Short, Savage & High-Impact)",
+  "step": 1,
+  "total_steps": 10,
+  "pillar": "HINGLISH_ROAST",
+  "current_category": "Savage One-Liner Discord Roast",
+  "current_prompt": "[User: Mayank]: bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu.",
+  "last_prompt": "[User: Mayank]: bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu.",
+  "last_response": "Initializing Short & Punchy AI Calibration Engine...",
+  "last_score": 100,
+  "last_latency": 1.8,
+  "avg_score": 100.0,
+  "recent_activity": [],
+  "radar_metrics": {
+    "brevity_punch": 99,
+    "savage_wit": 97,
+    "hinglish_flow": 98,
+    "clean_concise_code": 96,
+    "zero_slop": 100
+  },
+  "elapsed_seconds": 924,
+  "remaining_seconds": 31535075,
+  "progress_percent": 0.0,
+  "total_duration": 31536000,
+  "active_keys": 2,
+  "total_keys": 2,
+  "timestamp": 1786987332.229371
+}
