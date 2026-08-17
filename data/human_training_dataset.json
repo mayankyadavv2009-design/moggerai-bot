@@ -3,6 +3,314 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "67ccdd8d-f992-4435-bce8-0af69aa8fe8b",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Siddharth]: bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu saale. no sugarcoating.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Savage Hinglish Roast on Attitude",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988528.961597
+    },
+    {
+      "id": "35d63198-be97-4556-8d6d-46342a3c57ca",
+      "category": "JAVA",
+      "user_prompt": "[User: Alex]: how to spawn an uncounted virtual thread in Java 21 and await a CompletableFuture? 2 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988524.8963773
+    },
+    {
+      "id": "98829307-cf7b-4130-9f33-16edd89456d0",
+      "category": "JAVA",
+      "user_prompt": "[User: Rohan]: how to spawn an uncounted virtual thread in Java 21 and await a CompletableFuture? 2 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988520.81719
+    },
+    {
+      "id": "202bafa2-9423-4101-b806-e8b07d3e96da",
+      "category": "SQL_GO",
+      "user_prompt": "[User: Liam]: how to avoid channel deadlock in Go when multiple producers write to a buffered channel?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "SQL_Go Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988516.7413123
+    },
+    {
+      "id": "66a5161a-c606-41f9-b0df-4ad084a58071",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Siddharth]: @MoggerAI tu bot hoke itna based kaise ban gaya kisne sikhaya teko?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Comeback on Flattery / Provocation",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988512.6706762
+    },
+    {
+      "id": "fbbffd76-9684-4402-a303-3e3aa20fb397",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Priya]: Why is transitioning from 8A to 8B or 9A a perfect DJ mix? Explain in 2 punchy lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Harmonic DJ Mixing & Camelot Wheel",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988508.6110249
+    },
+    {
+      "id": "19e0a187-1369-4ae8-b250-a7788d7eef89",
+      "category": "LUA",
+      "user_prompt": "[User: Priya]: how to create clean prototype OOP inheritance using setmetatable and __index? Shortest clean code.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988504.5431883
+    },
+    {
+      "id": "3f4f6845-048a-40b9-9623-85cb3d8b3f3a",
+      "category": "SQL_GO",
+      "user_prompt": "[User: Marcus]: write a recursive SQL CTE to find all descendants in a hierarchical comment tree.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "SQL_Go Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988500.4773839
+    },
+    {
+      "id": "a3c59f77-346b-46db-acf5-8476b3434d46",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Dev]: How to create an aggressive Reeses bass in Vital/Serum with comb filtering? 3 steps.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Midtempo Cyberpunk Bass Sound Design",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988496.4105504
+    },
+    {
+      "id": "02afe6f5-aa8f-4266-9417-b5474212dec6",
+      "category": "LUA",
+      "user_prompt": "[User: Alex]: how to implement weak tables in Lua to prevent memory leaks in event listeners?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988492.3450513
+    },
+    {
+      "id": "dc6b607a-b92c-4ebf-b580-ad406aa83086",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Priya]: write a WebGL fragment shader for a retro CRT scanline distortion effect in 6 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "HTML_JS Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988488.244868
+    },
+    {
+      "id": "ce3b7f48-ec18-40bd-8be3-c0a12a2a7b23",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Leo]: bhai coding seekh ke 3 saal ho gaye abhi bhi bug nahi dhoondh pata, lagta hai chhod dena chahiye. honestly bol.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Sarcastic Hinglish Reality Check",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988484.1634672
+    },
+    {
+      "id": "cf68c745-7be4-42e4-b030-98ecaf5f74e4",
+      "category": "PYTHON",
+      "user_prompt": "[User: Boris]: how to implement a lock-free async queue using asyncio.Queue without race condition?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988479.8987494
+    },
+    {
+      "id": "31f217e6-47cd-41ef-a348-ee9aa3a20d6a",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Dev]: Why is transitioning from 8A to 8B or 9A a perfect DJ mix? Explain in 2 punchy lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Harmonic DJ Mixing & Camelot Wheel",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988475.8228228
+    },
+    {
+      "id": "3258170b-df5c-41cd-a40c-4d71765d5a7a",
+      "category": "CPP_RUST",
+      "user_prompt": "[User: Samir]: how to prevent false sharing in C++ multi-threaded audio mixer using alignas(64)?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "CPP_Rust Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988471.736877
+    },
+    {
+      "id": "2ea5a7ed-1117-4d4b-a8e4-857244fa85f3",
+      "category": "HTML_JS",
+      "user_prompt": "[User: Vikram]: build a concise JavaScript Web Audio API snippet that triggers an 808 sub-bass with pitch glide.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "HTML_JS Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988467.6635115
+    },
+    {
+      "id": "ea3295e2-b800-452e-a9a7-3d1079cfd712",
+      "category": "JAVA",
+      "user_prompt": "[User: Rohan]: how to use Java 21 scoped values instead of ThreadLocal for high-throughput virtual threads?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988463.5864735
+    },
+    {
+      "id": "8b78fd9d-cda7-4149-9fd7-aee6e4b65afe",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Vikram]: @MoggerAI tu bot hoke itna based kaise ban gaya kisne sikhaya teko? jaldi bata.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Comeback on Flattery / Provocation",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988459.5137398
+    },
+    {
+      "id": "70baba65-70e3-4f1c-a2db-2f8f1bde96b1",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Zack]: @MoggerAI tu kitna vella hai din bhar discord pe betha rehta hai koi real job nahi hai kya? no sugarcoating.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Raw Comeback on Incompetence",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988455.4477868
+    },
+    {
+      "id": "a59de5c1-4e6d-40ed-a6b1-8da4a42767dd",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Alex]: Why is transitioning from 8A to 8B or 9A a perfect DJ mix? Explain in 2 punchy lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Harmonic DJ Mixing & Camelot Wheel",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988451.3810897
+    },
+    {
+      "id": "25e86c9d-0b73-4baf-9f94-80c05c5f999e",
+      "category": "PYTHON",
+      "user_prompt": "[User: Chloe]: how to implement a lock-free async queue using asyncio.Queue without race condition?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988447.3029258
+    },
+    {
+      "id": "f0f44d1f-0112-4538-ac76-a657a4092fdf",
+      "category": "JAVA",
+      "user_prompt": "[User: Liam]: how to spawn an uncounted virtual thread in Java 21 and await a CompletableFuture? 2 lines.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988443.232157
+    },
+    {
       "id": "2e6d5a62-7a13-4c0e-b380-ba016320a013",
       "category": "LUA",
       "user_prompt": "[User: Kabir]: how to create clean prototype OOP inheritance using setmetatable and __index? Shortest clean code.",

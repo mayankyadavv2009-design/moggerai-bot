@@ -179,6 +179,10 @@ class ClaudeBrain:
         CONVERSATION_HISTORY.pop(session_id, None)
 
     @staticmethod
+    def get_history(session_id: str) -> List[Dict[str, str]]:
+        return CONVERSATION_HISTORY.get(session_id, [])
+
+    @staticmethod
     def add_turn(session_id: str, role: str, text: str):
         if session_id not in CONVERSATION_HISTORY:
             CONVERSATION_HISTORY[session_id] = []
@@ -192,10 +196,17 @@ class ClaudeBrain:
         session_id: str,
         user_prompt: str,
         user_name: str = "User",
-        system_override: Optional[str] = None
+        system_override: Optional[str] = None,
+        _is_fallback: bool = False
     ) -> str:
         candidates = key_rotator.get_ordered_candidates()
-        if not candidates:
+        if not candidates and not _is_fallback:
+            try:
+                from utils.groq_brain import GroqBrain, groq_key_rotator
+                if groq_key_rotator.keys:
+                    return await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+            except Exception:
+                pass
             return (
                 "✨ **MoggerAI Claude Fable 5 Brain is Ready!**\n\n"
                 "To activate my full conversational intellect, please add your **Gemini API Key(s)** to rotation:\n"
