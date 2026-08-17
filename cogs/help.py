@@ -8,6 +8,7 @@ from config import EMBED_COLOR_MAIN, BOT_NAME, BOT_VERSION
 class HelpSelect(Select):
     def __init__(self):
         options = [
+            discord.SelectOption(label="Game Dev & Roblox AI", value="gamedev", description="Roblox 3D/2D Luau, AAA engines, WebGPU, Pygame, C++", emoji="🎮"),
             discord.SelectOption(label="Core Music Engine", value="music", description="Play, pause, skip, queue, loop, volume", emoji="🎵"),
             discord.SelectOption(label="DSP Equalizers & Filters", value="fx", description="8D Surround, Bassboost 1-3, Nightcore, Reverb, Karaoke", emoji="🎛️"),
             discord.SelectOption(label="Club DJ Controls", value="dj", description="DJ role, 24/7 mode, autoplay, vote skip", emoji="🎧"),
@@ -21,7 +22,25 @@ class HelpSelect(Select):
         cat = self.values[0]
         embed = discord.Embed(color=EMBED_COLOR_MAIN)
 
-        if cat == "music":
+        if cat == "gamedev":
+            embed.title = "🎮 Game Dev & Roblox Studio AI Commands"
+            embed.description = (
+                "`/roblox system:<type> details:<str>` - Generate ultra-realistic 3D/2D Roblox Luau scripts:\n"
+                "• `3D Spring Camera Recoil & Sway`\n"
+                "• `Raycast Gun & Ballistics with Drop`\n"
+                "• `Server Lag Compensation Rewind Buffer`\n"
+                "• `Procedural Foot Inverse Kinematics (IK)`\n"
+                "• `2D Drag-and-Drop Grid Inventory`\n"
+                "• `Raycast Vehicle Chassis Suspension`\n\n"
+                "`/gamedev engine:<type> task:<str>` - Generate AAA mechanics, 60FPS physics, shaders:\n"
+                "• `Roblox Luau (3D/2D)`\n"
+                "• `HTML5 Canvas / WebGPU Shaders`\n"
+                "• `Python (Pygame & Ursina 3D)`\n"
+                "• `Java (LibGDX & Minecraft)`\n"
+                "• `C++ (Unreal Engine & Raylib)`\n\n"
+                "`/ask prompt:<str>` - Chat with MoggerAI on any coding, music theory, or banter topic."
+            )
+        elif cat == "music":
             embed.title = "🎵 Core Music Engine Commands"
             embed.description = (
                 "`/live` (or `/join`) - Connect to voice and stream your YouTube Live Broadcast directly\n"

@@ -57,6 +57,14 @@ python main.py
 
 ## 🎮 Command Manual
 
+### 🕹️ Game Development & Ultra-Realistic Roblox AI Commands
+| Command | Description |
+|---|---|
+| `/roblox system:<type> details:<str>` | Generate ultra-realistic 3D/2D Roblox Luau scripts (Spring Camera Recoil, Lag Compensation Rewind, IK Foot Planting, Drag & Drop Inventory, Raycast Vehicle Suspension) |
+| `/gamedev engine:<type> task:<str>` | Generate AAA game mechanics, 60FPS physics loops, Cook-Torrance PBR shaders, or ECS in Roblox Luau, HTML5 WebGPU, Python Pygame, Java LibGDX, or C++ Unreal/Raylib |
+| `/ask prompt:<str>` | Chat with MoggerAI Claude Fable 5 with zero-corporate-slop, savage roasts, and high-IQ coding advice |
+| `/clearchat` | Reset your conversation memory to start a clean topic |
+
 ### 🎵 Music & AI Recommendation Commands
 | Command | Description |
 |---|---|

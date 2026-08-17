@@ -152,6 +152,69 @@ class Chatbot(commands.Cog):
         ClaudeBrain.clear_history(session_id)
         await interaction.response.send_message("🧹 **Conversation memory cleared!** Starting with a fresh context.", ephemeral=True)
 
+    # ------------------- 🎮 Game Development & Roblox Studio Commands -------------------
+    @app_commands.command(name="gamedev", description="Generate AAA game mechanics, 60FPS physics loops, shaders, or ECS in any language")
+    @app_commands.describe(
+        engine="Game engine or language environment",
+        task="What game system, mechanic, algorithm, or shader do you want to create?"
+    )
+    async def gamedev_slash(
+        self,
+        interaction: discord.Interaction,
+        engine: Literal["Roblox Luau (3D/2D)", "HTML5 Canvas / WebGPU", "Python (Pygame/Ursina)", "Java (LibGDX/Minecraft)", "C++ (Unreal/Raylib/OpenGL)"],
+        task: str
+    ):
+        await interaction.response.defer()
+        session_id = f"gamedev_{interaction.user.id}"
+        prompt = f"[GAME DEVELOPMENT REQUEST - Engine: {engine}]\nTask: {task}\n\nProvide the cleanest, production-ready, high-performance, bug-free implementation with minimal elegant explanation."
+        
+        response = await ClaudeBrain.generate_response(
+            session_id=session_id,
+            user_prompt=prompt,
+            user_name=interaction.user.display_name
+        )
+        
+        chunks = split_message(response)
+        await interaction.followup.send(chunks[0])
+        for chunk in chunks[1:]:
+            if interaction.channel:
+                await interaction.channel.send(chunk)
+
+    @app_commands.command(name="roblox", description="Generate ultra-realistic 3D/2D Roblox Luau scripts (Springs, IK, Netcode, Inventory)")
+    @app_commands.describe(
+        system="Roblox subsystem architecture",
+        details="Specific mechanics, replication rules, or custom features"
+    )
+    async def roblox_slash(
+        self,
+        interaction: discord.Interaction,
+        system: Literal[
+            "3D Spring Camera Recoil & Sway",
+            "Raycast Gun & Ballistics with Drop",
+            "Server Lag Compensation Rewind Buffer",
+            "Procedural Foot Inverse Kinematics (IK)",
+            "2D Drag-and-Drop Grid Inventory",
+            "Raycast Vehicle Chassis Suspension",
+            "Modular Combat State Machine & Parry"
+        ],
+        details: str
+    ):
+        await interaction.response.defer()
+        session_id = f"roblox_{interaction.user.id}"
+        prompt = f"[ROBLOX LUAU STUDIO ARCHITECTURE - Subsystem: {system}]\nDetails: {details}\n\nWrite an ultra-realistic, performant, non-blocking Roblox Luau script with exact Client/Server/Module separation and clean type annotations."
+        
+        response = await ClaudeBrain.generate_response(
+            session_id=session_id,
+            user_prompt=prompt,
+            user_name=interaction.user.display_name
+        )
+        
+        chunks = split_message(response)
+        await interaction.followup.send(chunks[0])
+        for chunk in chunks[1:]:
+            if interaction.channel:
+                await interaction.channel.send(chunk)
+
     # ------------------- API Key Rotation Management Commands -------------------
     @app_commands.command(name="ai_keys", description="Manage Gemini API Key Rotation pool (add, list, remove, or clear keys)")
     @app_commands.describe(
