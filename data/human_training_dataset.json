@@ -3,6 +3,104 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "3dc26e6c-6938-4616-bf91-6366823aeb6f",
+      "category": "JAVA",
+      "user_prompt": "[User: Leo]: how to use Java 21 scoped values instead of ThreadLocal for high-throughput virtual threads?",
+      "ideal_response": "Use a\u202f`ScopedValue`\u202finstead of a\u202f`ThreadLocal`\u202fso the value is passed automatically to every virtual thread you spawn:\n\n```java\nstatic final ScopedValue<String> USER = ScopedValue.newInstance();\n\npublic static void main(String[] args) throws Exception {\n    var vt = Thread.ofVirtual().start(() ->\n        ScopedValue.where(USER, \"leo\")\n                    .run(() -> System.out.println(\"User = \" + USER.get())));\n    vt.join();\n}\n```\n\nThe `ScopedValue.where(...).run(...)` captures the value once and propagates it to all child virtual threads without the overhead of thread\u2011local look\u2011ups. \ud83d\ude80",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989205.8882296
+    },
+    {
+      "id": "ddf96a7f-3f4d-42d4-8c6d-2b67c9414953",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Natasha]: Why must frequencies below 120Hz strictly be mono in club sound systems? Give DSP reason in 1 sentence.",
+      "ideal_response": "Below\u202f120\u202fHz the wavelengths are huge and the subs radiate omnidirectionally, so any stereo offset causes phase cancellation and uneven room coverage\u2014keeping the sub\u2011bass mono keeps it in\u2011phase and lets the system deliver maximum, uniform SPL.",
+      "rating": 5,
+      "feedback_tags": [
+        "Stereo Imaging for Sub-Bass DSP",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989192.9940643
+    },
+    {
+      "id": "8bf18d36-9506-4046-9235-148070343001",
+      "category": "SQL_GO",
+      "user_prompt": "[User: Zack]: write a Go goroutine worker pool with context cancellation and error propagation in 6 lines.",
+      "ideal_response": "```go\nfunc Pool(ctx context.Context, jobs <-chan func() error, n int) error {\n\tvar wg sync.WaitGroup; errc := make(chan error, 1)\n\tfor i := 0; i < n; i++ { wg.Add(1); go func() { defer wg.Done(); for { select {\n\tcase <-ctx.Done(): return\n\tcase j, ok := <-jobs: if !ok { return }; if e := j(); e != nil { select {case errc <- e: default{}}; return }\n\t}} }() }\n\twg.Wait(); close(errc)\n\tif e, ok := <-errc; ok { return e }\n\treturn nil\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "SQL_Go Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989180.2844365
+    },
+    {
+      "id": "9ad8213d-5927-4adf-b6d5-aac615c5c492",
+      "category": "SQL_GO",
+      "user_prompt": "[User: Kabir]: how to avoid channel deadlock in Go when multiple producers write to a buffered channel?",
+      "ideal_response": "Don\u2019t let producers out\u2011pace the consumer \u2013 spin a single **fan\u2011in goroutine** that reads from each producer\u2019s own channel and writes to the shared buffered channel; close the buffer only after a `sync.WaitGroup` says all producers are done.\n\n```go\nvar wg sync.WaitGroup\nbuf := make(chan Item, 100)\n\nfor _, p := range producers {\n    wg.Add(1)\n    ch := make(chan Item)\n    go func(ch <-chan Item) {\n        defer wg.Done()\n        for v := range ch { buf <- v } // never blocks the producer\n    }(ch)\n    // start producer writing to ch \u2026\n}\ngo func() {\n    wg.Wait()\n    close(buf) // safe: no more sends\n}()\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "SQL_Go Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989166.0190525
+    },
+    {
+      "id": "5aba70df-e660-4641-89a5-cc8359b0fb9c",
+      "category": "PYTHON",
+      "user_prompt": "[User: Kabir]: why is my asyncio loop blocking on time.sleep() and how to fix it in 2 lines?",
+      "ideal_response": "`time.sleep()` freezes the thread, so the whole async loop stalls.  \nJust replace it with `await asyncio.sleep(<seconds>)` (or run it in an executor).",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989153.011634
+    },
+    {
+      "id": "fee21175-7926-4ba4-b2b0-9f6d181c40c4",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Aryan]: How to create an aggressive Reeses bass in Vital/Serum with comb filtering? 3 steps.",
+      "ideal_response": "1\ufe0f\u20e3 Pick a **saw\u2011tooth** (or two detuned saws) \u2192 crank the **unison** to 7\u20118 voices, spread them wide.  \n2\ufe0f\u20e3 Add a **comb\u2011filter** (or cheap \u201cphaser\u201d module) \u2192 set **feedback\u202f\u2248\u202f80\u201190%**, sweep the **cutoff** fast (LFO or envelope).  \n3\ufe0f\u20e3 Boost the **low\u2011end** with a cheap **sine sub** and a **high\u2011shelf** for bite, then crank the **master gain** and add a bit of **distortion** for that nasty Reese growl. \ud83d\ude80",
+      "rating": 5,
+      "feedback_tags": [
+        "Midtempo Cyberpunk Bass Sound Design",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989140.0978613
+    },
+    {
+      "id": "4c5a5e52-6ccf-402f-8cee-c20b0f77df0f",
+      "category": "LUA",
+      "user_prompt": "[User: Boris]: how to serialize a cyclic table in Lua without stack overflow?",
+      "ideal_response": "Use a \u201cseen\u201d map that gives each table an ID, replace repeats with `{\"$ref\":id}` and dump the whole thing as JSON (or Lua syntax).  \n\n```lua\nlocal function serialize(root)\n  local seen, out, id = {}, {}, 0\n  local function walk(t)\n    if type(t)~='table' then return t end\n    if seen[t] then return {[\"$ref\"]=seen[t]} end\n    id = id+1; seen[t]=id\n    local r = {[\"$id\"]=id}\n    for k,v in pairs(t) do r[k]=walk(v) end\n    return r\n  end\n  return require('cjson').encode(walk(root))\nend\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786989126.3578224
+    },
+    {
       "id": "8c037b37-1db5-4ce9-ae02-0198f5c83331",
       "category": "LUA",
       "user_prompt": "[User: Zack]: write an atomic Redis Lua script for token-bucket rate limiting supporting burst capacity.",

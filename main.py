@@ -124,10 +124,18 @@ async def main():
         token = DISCORD_TOKEN
         if not token or token == "YOUR_DISCORD_BOT_TOKEN_HERE":
             logger.error("❌ CRITICAL: DISCORD_TOKEN not found in .env or environment!")
-            logger.info("👉 Please edit your .env file and add your DISCORD_TOKEN!")
-            return
+            logger.info("👉 Please configure DISCORD_TOKEN in Render / Cloud Environment Variables!")
+            logger.info("🌐 Web Server is running and accessible 24/7.")
+            while True:
+                await asyncio.sleep(3600)
 
-        await bot.start(token)
+        try:
+            await bot.start(token)
+        except Exception as e:
+            logger.error(f"❌ Discord Login/Connection error: {e}")
+            logger.info("🌐 Web Server is running and accessible 24/7.")
+            while True:
+                await asyncio.sleep(3600)
 
 
 if __name__ == "__main__":

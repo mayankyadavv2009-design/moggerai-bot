@@ -1,10 +1,15 @@
 import os
 import zipfile
+import sys
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
-OUTPUT_ZIP = r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot\MoggerAI_Cloud_Package.zip"
-BASE_DIR = r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_ZIP = os.path.join(BASE_DIR, "MoggerAI_Cloud_Package.zip")
 
-EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "env", "venv"}
+EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "env", "venv", "tools"}
 EXCLUDE_FILES = {".env", "MoggerAI_Cloud_Package.zip"}
 
 print(f">> Packaging project for 1-click cloud upload...")

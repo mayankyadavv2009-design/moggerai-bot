@@ -11,7 +11,7 @@ echo ========================================================
 
 :LOOP
 echo [%date% %time%] Launching Continuous Training Cycle...
-python -u "C:\Users\mayan\.gemini\antigravity-ide\brain\8473a184-f7a7-43e9-b63b-82bc1545c8c9\scratch\continuous_trainer.py"
+python -u "%~dp0scripts\continuous_trainer.py"
 echo [%date% %time%] Process exited or network hiccup. Auto-restarting in 5 seconds...
 timeout /t 5 /nobreak >nul
 goto LOOP

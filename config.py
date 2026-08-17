@@ -5,7 +5,7 @@ load_dotenv()
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
 DEFAULT_PREFIX = os.getenv("DEFAULT_PREFIX", "!")
-WEB_PORT = int(os.getenv("WEB_PORT", 5000))
+WEB_PORT = int(os.getenv("PORT", os.getenv("WEB_PORT", "5000")))
 DEFAULT_VOLUME = float(os.getenv("DEFAULT_VOLUME", "0.8"))
 YOUTUBE_STATUS_URL = os.getenv("YOUTUBE_STATUS_URL", "https://www.youtube.com/watch?v=1Ou9YGcQzls")
 STATUS_TEXT = os.getenv("STATUS_TEXT", "🔴 LIVE • JOIN ME NOW ⚡")

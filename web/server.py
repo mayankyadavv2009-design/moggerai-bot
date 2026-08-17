@@ -21,6 +21,10 @@ def index():
 def get_training_status_dict():
     import json, os, glob
     candidate_paths = [
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "training_status.json"),
+        os.path.join(os.getcwd(), "training_status.json"),
+        "/app/training_status.json",
+        "training_status.json",
         r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot\training_status.json",
         r"C:\Users\mayan\.gemini\antigravity-ide\brain\8473a184-f7a7-43e9-b63b-82bc1545c8c9\scratch\training_status.json"
     ] + glob.glob(r"C:\Users\mayan\.gemini\antigravity-ide\brain\*\scratch\training_status.json")
@@ -29,7 +33,9 @@ def get_training_status_dict():
         if path and os.path.exists(path):
             try:
                 with open(path, "r", encoding="utf-8") as f:
-                    return json.load(f)
+                    data = json.load(f)
+                    if data:
+                        return data
             except Exception:
                 pass
 
@@ -129,32 +135,8 @@ def get_daily_mixes():
     return jsonify(mixes)
 
 @app.route('/api/training_status', methods=['GET'])
-def get_training_status():
-    import json, os, glob
-    
-    candidate_paths = [
-        r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot\training_status.json",
-        r"C:\Users\mayan\.gemini\antigravity-ide\brain\8473a184-f7a7-43e9-b63b-82bc1545c8c9\scratch\training_status.json"
-    ] + glob.glob(r"C:\Users\mayan\.gemini\antigravity-ide\brain\*\scratch\training_status.json")
-
-    for path in candidate_paths:
-        if path and os.path.exists(path):
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    return jsonify(data)
-            except Exception:
-                pass
-
-    return jsonify({
-        "status": "training",
-        "progress_percent": 0.5,
-        "elapsed_seconds": 30,
-        "remaining_seconds": 7170,
-        "cycle": 1,
-        "model": "gemini-2.5-flash",
-        "persona": "Claude Fable 5"
-    })
+def api_training_status():
+    return jsonify(get_training_status_dict())
 
 @app.route('/api/autoplay', methods=['POST'])
 def api_autoplay():
@@ -336,7 +318,16 @@ def update_youtube_status():
     
     new_url, new_title = save_status(new_url=url, new_text=title)
     if bot_instance:
-        activity = discord.Streaming(name=new_title, url=new_url)
+        try:
+            activity = discord.Streaming(name=new_title, url=new_url)
+            asyncio.run_coroutine_threadsafe(
+                bot_instance.change_presence(activity=activity, status=discord.Status.online),
+                bot_instance.loop
+            )
+        except Exception as e:
+            logger.error(f"Failed to update streaming status: {e}")
+    return jsonify({"success": True, "url": new_url, "title": new_title})
+
 @app.route('/training')
 def training_studio():
     return render_template('training.html')
@@ -355,6 +346,7 @@ def api_train_chat():
 
     t0 = time.time()
     loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     try:
         reply = loop.run_until_complete(
             GroqBrain.generate_response(
@@ -363,8 +355,13 @@ def api_train_chat():
                 user_name="Trainer"
             )
         )
+    except Exception as e:
+        reply = f"Generation error: {str(e)}"
     finally:
-        loop.close()
+        try:
+            loop.close()
+        except Exception:
+            pass
 
     elapsed = round(time.time() - t0, 2)
     return jsonify({
@@ -423,29 +420,16 @@ def api_train_export():
     from utils.training_manager import TrainingManager
     return jsonify(TrainingManager.load_dataset())
 
-@app.route('/api/training_status', methods=['GET'])
-def api_training_status():
-    status_paths = [
-        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "training_status.json"),
-        r"c:\Users\mayan\.gemini\antigravity\scratch\resonance_dj_bot\training_status.json"
-    ]
-    for p in status_paths:
-        if os.path.exists(p):
-            try:
-                with open(p, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                    return jsonify(data)
-            except Exception:
-                pass
-    return jsonify({
-        "status": "training",
-        "progress_percent": 15.0,
-        "elapsed_seconds": 120,
-        "pillar": "UNCENSORED_ROAST",
-        "current_category": "Procedural Evolution Engine",
-        "recent_activity": []
-    })
-
-def run_web_server(port: int = 5000):
-    thread = threading.Thread(target=lambda: app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False), daemon=True)
-    thread.start()
+_server_thread = None
+def run_web_server(port: int = None):
+    global _server_thread
+    if _server_thread and _server_thread.is_alive():
+        return
+    import config
+    bind_port = int(port) if port is not None else int(config.WEB_PORT)
+    _server_thread = threading.Thread(
+        target=lambda: app.run(host='0.0.0.0', port=bind_port, debug=False, use_reloader=False),
+        daemon=True
+    )
+    _server_thread.start()
+    logging.getLogger("ResonanceApex").info(f"🌐 Web Server listening on 0.0.0.0:{bind_port}")
