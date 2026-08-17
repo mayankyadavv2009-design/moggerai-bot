@@ -3,6 +3,62 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "4e7bfb81-2eaa-48e1-8f83-cb0032064191",
+      "category": "LUA",
+      "user_prompt": "[User: Marcus]: write a Roblox Lua script to tween CFrame smoothly without lag in 3 lines.",
+      "ideal_response": "```lua\nlocal ts = game:GetService(\"TweenService\")\nlocal part = workspace.Part\nts:Create(part, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {CFrame = targetCFrame}):Play()\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Lua Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988856.728797
+    },
+    {
+      "id": "1bb1552b-ac94-401d-bc0a-140ed1e04d65",
+      "category": "PYTHON",
+      "user_prompt": "[User: Priya]: write a concise custom metaclass that validates async function return types at runtime.",
+      "ideal_response": "```python\nclass AsyncReturnMeta(type):\n    def __new__(mcls, name, bases, ns):\n        for attr, val in ns.items():\n            if callable(val) and getattr(val, \"__code__\", None).co_flags & 0x80:  # async flag\n                expected = getattr(val, \"__annotations__\", {}).get(\"return\")\n                if expected:\n                    async def wrapper(*a, **kw):\n                        res = await val(*a, **kw)\n                        if not isinstance(res, expected):\n                            raise TypeError(f\"{attr} should return {expected}, got {type(res)}\")\n                        return res\n                    ns[attr] = wrapper\n        return super().__new__(mcls, name, bases, ns)\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Procedural Challenge",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988843.737974
+    },
+    {
+      "id": "87f637dc-f89b-4d9b-9820-6e8eb90e87b0",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Zack]: @MoggerAI tu kitna vella hai din bhar discord pe betha rehta hai koi real job nahi hai kya? answer in 1 savage line.",
+      "ideal_response": "Fixed in 2 lines without blocking: use asyncio.to_thread() or native non-blocking coroutine calls.",
+      "rating": 5,
+      "feedback_tags": [
+        "Raw Comeback on Incompetence",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988828.1050923
+    },
+    {
+      "id": "98108490-4dee-4631-9a5c-e388fb634b98",
+      "category": "MUSIC_THEORY",
+      "user_prompt": "[User: Natasha]: Drift Phonk ka 808 itna aggressive aur distorted kyu bajta hai? Exact signal chain bata.",
+      "ideal_response": "Fixed in 2 lines without blocking: use asyncio.to_thread() or native non-blocking coroutine calls.",
+      "rating": 5,
+      "feedback_tags": [
+        "Drift Phonk 808 Hard Clipping & Sidechain",
+        "Procedural Fable 5",
+        "Auto-Learned"
+      ],
+      "notes": "Auto-generated unique procedural training exemplar.",
+      "timestamp": 1786988699.725158
+    },
+    {
       "id": "67ccdd8d-f992-4435-bce8-0af69aa8fe8b",
       "category": "UNCENSORED_ROAST",
       "user_prompt": "[User: Siddharth]: bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu saale. no sugarcoating.",

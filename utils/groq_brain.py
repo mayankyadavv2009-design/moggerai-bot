@@ -20,22 +20,15 @@ class GroqKeyRotator:
     def reload(self):
         self.keys = get_groq_keys()
 
-    def get_next_key(self) -> Optional[str]:
+    def get_ordered_candidates(self) -> List[str]:
         self.reload()
         if not self.keys:
-            return None
+            return []
         now = time.time()
-        for _ in range(len(self.keys)):
-            key = self.keys[self.current_idx]
-            self.current_idx = (self.current_idx + 1) % len(self.keys)
-            if self.cooldowns.get(key, 0) <= now:
-                return key
-        return self.keys[0]
-
-    def has_available_key(self) -> bool:
-        self.reload()
-        now = time.time()
-        return any(self.cooldowns.get(k, 0) <= now for k in self.keys)
+        active = [k for k in self.keys if self.cooldowns.get(k, 0) <= now]
+        cooling = [k for k in self.keys if self.cooldowns.get(k, 0) > now]
+        cooling.sort(key=lambda k: self.cooldowns.get(k, 0))
+        return active + cooling
 
     def mark_rate_limited(self, key: str, cooldown_seconds: float = 20.0):
         self.cooldowns[key] = time.time() + cooldown_seconds
@@ -55,13 +48,13 @@ GROQ_SYSTEM_PROMPT = """You are MoggerAI, an exceptionally intelligent, based, c
 """
 
 class GroqBrain:
-    """Ultra-fast inference engine for Testing & Benchmark Training using Groq API"""
+    """Ultra-fast inference engine with dynamic 6-key pool rotation for Testing & Benchmark Training"""
 
     MODELS = [
-        "qwen/qwen3.6-27b",
         "openai/gpt-oss-120b",
-        "groq/compound",
-        "allam-2-7b"
+        "openai/gpt-oss-20b",
+        "qwen/qwen3.6-27b",
+        "groq/compound"
     ]
 
     @classmethod
@@ -74,14 +67,14 @@ class GroqBrain:
         model_name: Optional[str] = None,
         _is_fallback: bool = False
     ) -> str:
-        groq_key = groq_key_rotator.get_next_key()
+        candidates = groq_key_rotator.get_ordered_candidates()
         
-        # If no Groq key is found in .env, gracefully fallback to ClaudeBrain (Gemini)
-        if not groq_key or not groq_key_rotator.keys:
+        # If no Groq keys exist, fallback to ClaudeBrain (Gemini)
+        if not candidates:
             if not _is_fallback:
                 from utils.claude_brain import ClaudeBrain
                 return await ClaudeBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
-            return "⚠️ *Groq key not configured and Gemini is offline.*"
+            return "⚠️ *No Groq keys configured.*"
 
         sys_prompt = system_override or GROQ_SYSTEM_PROMPT
         try:
@@ -94,47 +87,55 @@ class GroqBrain:
 
         models = [model_name] if model_name else cls.MODELS
 
-        headers = {
-            "Authorization": f"Bearer {groq_key}",
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-        }
-
-        for model in models:
-            payload = {
-                "model": model,
-                "messages": [
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": f"[{user_name}]: {user_prompt}"}
-                ],
-                "temperature": 0.85,
-                "max_tokens": 1024
-            }
-
-            url = "https://api.groq.com/openai/v1/chat/completions"
-
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(url, headers=headers, json=payload, timeout=aiohttp.ClientTimeout(total=12)) as resp:
-                        if resp.status == 200:
-                            data = await resp.json()
-                            reply = data["choices"][0]["message"]["content"].strip()
-                            # Clean reasoning tags if present
-                            reply = re.sub(r'<think>.*?</think>', '', reply, flags=re.DOTALL).strip()
-                            groq_key_rotator.usage_stats[groq_key] = groq_key_rotator.usage_stats.get(groq_key, 0) + 1
-                            return reply
-                        elif resp.status == 429:
-                            groq_key_rotator.mark_rate_limited(groq_key, 20.0)
-                            break
-                        else:
-                            err_text = await resp.text()
-                            logger.error(f"[GROQ ERROR] Model {model} status {resp.status}: {err_text[:100]}")
-                            continue
-            except Exception as e:
-                logger.error(f"[GROQ EXCEPTION] {e}")
+        # Try across each available Groq API key in rotation
+        for groq_key in candidates:
+            now = time.time()
+            if groq_key_rotator.cooldowns.get(groq_key, 0) > now:
                 continue
 
-        # If Groq attempt failed and we are NOT in fallback mode, try Gemini ONCE
+            headers = {
+                "Authorization": f"Bearer {groq_key}",
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            }
+
+            for model in models:
+                payload = {
+                    "model": model,
+                    "messages": [
+                        {"role": "system", "content": sys_prompt},
+                        {"role": "user", "content": f"[{user_name}]: {user_prompt}"}
+                    ],
+                    "temperature": 0.85,
+                    "max_tokens": 1024
+                }
+
+                url = "https://api.groq.com/openai/v1/chat/completions"
+
+                try:
+                    async with aiohttp.ClientSession() as session:
+                        async with session.post(url, headers=headers, json=payload, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                            if resp.status == 200:
+                                data = await resp.json()
+                                reply = data["choices"][0]["message"]["content"].strip()
+                                # Clean reasoning tags even if unclosed
+                                reply = re.sub(r'<think>.*?(?:</think>|$)', '', reply, flags=re.DOTALL).strip()
+                                if not reply:
+                                    reply = data["choices"][0]["message"]["content"].strip()
+                                groq_key_rotator.usage_stats[groq_key] = groq_key_rotator.usage_stats.get(groq_key, 0) + 1
+                                return reply
+                            elif resp.status == 429:
+                                groq_key_rotator.mark_rate_limited(groq_key, 20.0)
+                                break
+                            else:
+                                err_text = await resp.text()
+                                logger.error(f"[GROQ ERROR] Model {model} status {resp.status}: {err_text[:100]}")
+                                continue
+                except Exception as e:
+                    logger.error(f"[GROQ EXCEPTION] {e}")
+                    continue
+
+        # If all Groq keys are exhausted and not in fallback, try Gemini
         if not _is_fallback:
             try:
                 from utils.claude_brain import ClaudeBrain
