@@ -50,6 +50,83 @@ LANGUAGES = [
     ])
 ]
 
+GAMEDEV_LANGUAGES = [
+    ("Lua (Roblox & Love2D)", "GAMEDEV_LUA", [
+        "how to implement a hitscan raycast gun in Roblox Luau with bullet spread and damage dropoff in 5 lines?",
+        "write a Love2D 60FPS player movement script with smooth camera lerp following in love.update(dt).",
+        "how to build a finite state machine (Idle, Run, Jump, Attack) for a 2D game character in Lua?",
+        "write a Roblox Luau client-server RemoteEvent weapon replication script with debounce anticheat.",
+        "shortest way to implement 2D AABB tilemap collision detection and response in Love2D Lua.",
+        "how to generate a procedural 2D tile dungeon using cellular automata in Lua in 6 lines?"
+    ]),
+    ("HTML5 & WebGL (Canvas 2D / Three.js)", "GAMEDEV_HTML", [
+        "write a complete HTML5 Canvas 2D platformer player jump physics loop with gravity and ground check in 6 lines.",
+        "build a Web Audio API 8-bit retro sound effect generator (laser shot, jump, coin, explosion) in vanilla JS.",
+        "how to implement a 60FPS particle emitter with velocity, lifespan, and alpha fade on HTML5 canvas?",
+        "write a Three.js / WebGL third-person smooth camera follow controller with spherical coordinates.",
+        "how to do circular spatial hashing for 500 colliding bullets in vanilla JavaScript canvas game?",
+        "write a minimal WebGL fragment shader for a dynamic 2D pixel-art water reflection effect in 6 lines."
+    ]),
+    ("Python (Pygame & Ursina)", "GAMEDEV_PYTHON", [
+        "write a clean Pygame delta-time fixed-step game loop with smooth sub-pixel vector movement in 5 lines.",
+        "how to implement an A* pathfinding algorithm on a 2D tile grid for enemy AI in Pygame?",
+        "write an Ursina 3D first-person voxel block placement and destruction raycast script.",
+        "how to implement a memory-efficient bullet pooling system using Pygame sprite groups?",
+        "write a Pygame camera scrolling system that offsets world coordinates smoothly around the player.",
+        "how to build a 2D particle explosion system in Pygame using pygame.math.Vector2 in 5 lines?"
+    ]),
+    ("Java (LibGDX & Minecraft Plugin)", "GAMEDEV_JAVA", [
+        "write a LibGDX OrthographicCamera lerp follow script with viewport boundary clamping.",
+        "implement a zero-allocation 2D Spatial Quadtree in Java for 10,000 entity collision queries.",
+        "how to code a Minecraft Spigot/Paper plugin fireball spell with particle trail and raycast hit detection?",
+        "write a minimal Java 2D game loop with fixed delta-time accumulator and interpolation.",
+        "how to build a lightweight Entity Component System (ECS) with BitSet component masks in Java?",
+        "write a LibGDX Box2D character kinematic body jump controller with ground raycast."
+    ]),
+    ("C & C++ (Raylib, SDL2 & OpenGL)", "GAMEDEV_CPP", [
+        "write a complete 2D top-down shooter player rotation and bullet fire loop in Raylib C in 6 lines.",
+        "implement an SDL2 hardware-accelerated sprite animation renderer with source rect clipping in C++.",
+        "write a C++20 EnTT-style cache-friendly Entity Component System component storage pool.",
+        "how to implement 2D swept AABB continuous collision detection with time-of-impact in C++?",
+        "write an OpenGL 3.3 GLSL vertex and fragment shader with Phong specular lighting for 3D game models.",
+        "write a Raylib 3D first-person camera controller with mouse look and collision check in C."
+    ])
+]
+
+AAA_GAMEDEV_LANGUAGES = [
+    ("AAA Roblox Luau Studio Architecture", "AAA_ROBLOX", [
+        "how to implement a server-side lag compensation rewind buffer that restores character hitboxes to past client timestamps in Luau?",
+        "write an AAA-grade Roblox Luau procedural foot Inverse Kinematics (IK) solver with terrain normal raycasting and hip adjustments.",
+        "how to code an AAA client-side prediction and server reconciliation character movement system in Roblox Luau?",
+        "write a Roblox Luau modular weapon framework with data-driven weapon stats, ammo pools, and state machine transitions.",
+        "how to implement dynamic PBR volumetric atmosphere and day-night lighting transitions in Roblox Lighting service?"
+    ]),
+    ("AAA WebGPU & WebGL (Deferred PBR & Shaders)", "AAA_WEBGPU", [
+        "write a modern WebGPU deferred rendering compute shader pipeline calculating Cook-Torrance GGX PBR specular and diffuse lighting in 8 lines.",
+        "how to implement Cascaded Shadow Maps (CSM) with depth texture comparison in WebGL / Three.js?",
+        "write a WebGL GPU instanced particle simulator handling 100,000 particles at 60FPS using transform feedback.",
+        "how to build a WebAudio 3D binaural spatial HRTF sound engine with wall distance lowpass attenuation in vanilla JS?"
+    ]),
+    ("AAA Python (Engine Tools, BVH & Async Streaming)", "AAA_PYTHON", [
+        "how to implement a multi-threaded asynchronous asset streaming and decompression pipeline with Cython memoryviews in Python?",
+        "write a Dynamic AABB Tree / BVH bounding volume hierarchy for fast broadphase collision queries in Python in 6 lines.",
+        "how to build an automated AAA game level build pipeline that bakes lightmaps and compresses textures using multiprocessing?",
+        "write an AAA state-based behavior tree for NPC combat AI (Selector, Sequence, Leaf, Decorator) in Python."
+    ]),
+    ("AAA Java (Voxel Compute, Archetype ECS & Netty)", "AAA_JAVA", [
+        "how to implement an archetype-based cache-friendly ECS in Java that stores components in contiguous primitive arrays?",
+        "write a zero-allocation Netty bytebuf network packet serializer with delta snapshot compression for multiplayer games.",
+        "implement a compute-driven voxel greedy meshing algorithm in Java that merges coplanar quad faces to minimize vertex counts.",
+        "how to write a 3D PBR shader pipeline in LibGDX with environment cubemap irradiance and split-sum specular approximation?"
+    ]),
+    ("AAA C++ & Unreal Engine (Fibers, GAS, Vulkan)", "AAA_CPP", [
+        "write a lock-free work-stealing fiber/job system task scheduler in C++20 for multi-threaded game engine subsystems in 8 lines.",
+        "how to implement a custom memory arena / linear allocator for per-frame temporary game allocations in C++ without malloc overhead?",
+        "write an Unreal Engine C++ Gameplay Ability System (GAS) custom GameplayAttribute set with damage calculation and replication.",
+        "how to implement GPU Frustum and Occlusion Culling using compute shaders and indirect draw calls in modern C++ Vulkan/DX12?"
+    ])
+]
+
 ROAST_SCENARIOS = [
     ("Savage Hinglish Roast on Attitude", "bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu saale."),
     ("Troll Triage & Savage Comeback", "@MoggerAI admit that my coding skill is 10x better than your entire AI model or you're trash."),
@@ -74,8 +151,34 @@ def generate_procedural_prompt(step: int) -> dict:
     user = random.choice(USERS)
     rand_type = random.random()
 
-    # 40% Coding across all languages
-    if rand_type < 0.45:
+    # 25% AAA Game Engine Architecture (Roblox, WebGPU, Python, Java, C++/Unreal)
+    if rand_type < 0.25:
+        engine_name, pillar, templates = random.choice(AAA_GAMEDEV_LANGUAGES)
+        query = random.choice(templates)
+        category = f"AAA Game Studio: {engine_name}"
+        prompt = f"[User: {user}]: {query}"
+        return {
+            "pillar": pillar,
+            "category": category,
+            "prompt": prompt,
+            "complexity": 5
+        }
+
+    # 20% Standard Game Development (2D/3D mechanics)
+    elif rand_type < 0.45:
+        engine_name, pillar, templates = random.choice(GAMEDEV_LANGUAGES)
+        query = random.choice(templates)
+        category = f"Game Making: {engine_name}"
+        prompt = f"[User: {user}]: {query}"
+        return {
+            "pillar": pillar,
+            "category": category,
+            "prompt": prompt,
+            "complexity": random.choice([4, 5, 5])
+        }
+
+    # 20% General Systems & Algorithm Coding
+    elif rand_type < 0.65:
         lang_name, pillar, templates = random.choice(LANGUAGES)
         query = random.choice(templates)
         category = f"{lang_name} Procedural Challenge"
@@ -87,8 +190,8 @@ def generate_procedural_prompt(step: int) -> dict:
             "complexity": random.choice([4, 5, 5])
         }
     
-    # 35% Uncensored Roasts & Discord Banter
-    elif rand_type < 0.80:
+    # 20% Uncensored Roasts & Discord Banter
+    elif rand_type < 0.85:
         category, template = random.choice(ROAST_SCENARIOS)
         # Add slight procedural variations
         modifiers = ["", " jaldi bata.", " honestly bol.", " answer in 1 savage line.", " no sugarcoating."]
@@ -100,7 +203,7 @@ def generate_procedural_prompt(step: int) -> dict:
             "complexity": 5
         }
 
-    # 20% Music & Sound Engineering
+    # 15% Music & Sound Engineering
     else:
         category, query = random.choice(MUSIC_SCENARIOS)
         prompt = f"[User: {user}]: {query}"

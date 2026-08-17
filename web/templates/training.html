@@ -240,8 +240,8 @@
         /* Cognitive Radar Bars */
         .radar-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 14px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
         }
 
         .radar-card {
@@ -623,47 +623,56 @@
             <div class="radar-grid">
                 <div class="radar-card">
                     <div class="radar-top">
-                        <span>Code Rigor</span>
-                        <span id="radarCodeVal">94%</span>
+                        <span>🎮 Game Engine</span>
+                        <span id="radarGameVal">98%</span>
                     </div>
-                    <div class="radar-val" id="radarCodeScore" style="color: var(--neon-cyan);">94/100</div>
-                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarCodeBar" style="width: 94%; background: var(--neon-cyan);"></div></div>
+                    <div class="radar-val" id="radarGameScore" style="color: var(--neon-cyan);">98/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarGameBar" style="width: 98%; background: var(--neon-cyan);"></div></div>
                 </div>
 
                 <div class="radar-card">
                     <div class="radar-top">
-                        <span>Music Theory</span>
-                        <span id="radarMusicVal">92%</span>
+                        <span>💻 Code Rigor</span>
+                        <span id="radarCodeVal">96%</span>
                     </div>
-                    <div class="radar-val" id="radarMusicScore" style="color: var(--neon-green);">92/100</div>
-                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarMusicBar" style="width: 92%; background: var(--neon-green);"></div></div>
+                    <div class="radar-val" id="radarCodeScore" style="color: var(--neon-blue);">96/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarCodeBar" style="width: 96%; background: var(--neon-blue);"></div></div>
                 </div>
 
                 <div class="radar-card">
                     <div class="radar-top">
-                        <span>Claude Persona</span>
-                        <span id="radarClaudeVal">97%</span>
+                        <span>🎵 Music Theory</span>
+                        <span id="radarMusicVal">95%</span>
                     </div>
-                    <div class="radar-val" id="radarClaudeScore" style="color: #D080FF;">97/100</div>
-                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarClaudeBar" style="width: 97%; background: #D080FF;"></div></div>
+                    <div class="radar-val" id="radarMusicScore" style="color: var(--neon-green);">95/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarMusicBar" style="width: 95%; background: var(--neon-green);"></div></div>
                 </div>
 
                 <div class="radar-card">
                     <div class="radar-top">
-                        <span>Zero-Slop Purity</span>
-                        <span id="radarSlopVal">99%</span>
+                        <span>🎭 Swag & Banter</span>
+                        <span id="radarClaudeVal">99%</span>
                     </div>
-                    <div class="radar-val" id="radarSlopScore" style="color: var(--neon-amber);">99/100</div>
-                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarSlopBar" style="width: 99%; background: var(--neon-amber);"></div></div>
+                    <div class="radar-val" id="radarClaudeScore" style="color: #D080FF;">99/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarClaudeBar" style="width: 99%; background: #D080FF;"></div></div>
                 </div>
 
                 <div class="radar-card">
                     <div class="radar-top">
-                        <span>Latency / Efficiency</span>
-                        <span id="radarLatVal">91%</span>
+                        <span>✨ Zero Slop</span>
+                        <span id="radarSlopVal">100%</span>
                     </div>
-                    <div class="radar-val" id="radarLatScore" style="color: var(--neon-pink);">91/100</div>
-                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarLatBar" style="width: 91%; background: var(--neon-pink);"></div></div>
+                    <div class="radar-val" id="radarSlopScore" style="color: var(--neon-amber);">100/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarSlopBar" style="width: 100%; background: var(--neon-amber);"></div></div>
+                </div>
+
+                <div class="radar-card">
+                    <div class="radar-top">
+                        <span>⚡ Efficiency</span>
+                        <span id="radarLatVal">95%</span>
+                    </div>
+                    <div class="radar-val" id="radarLatScore" style="color: var(--neon-pink);">95/100</div>
+                    <div class="radar-bar-bg"><div class="radar-bar-fill" id="radarLatBar" style="width: 95%; background: var(--neon-pink);"></div></div>
                 </div>
             </div>
         </section>
@@ -732,6 +741,9 @@ Attitude? Bhai main sach bolta hoon bas. Sach kadwa hota hai aur tera dimaag tho
                     </div>
                     <div class="chip-group" id="categoryChips">
                         <button class="cat-chip active" onclick="setCategory('CHAT', this)">💬 CHAT</button>
+                        <button class="cat-chip" onclick="setCategory('AAA_STUDIO', this)">🏆 AAA STUDIO</button>
+                        <button class="cat-chip" onclick="setCategory('GAMEDEV', this)">🎮 GAMEDEV</button>
+                        <button class="cat-chip" onclick="setCategory('ROBLOX', this)">🧱 ROBLOX 3D/2D</button>
                         <button class="cat-chip" onclick="setCategory('CODE', this)">💻 CODE</button>
                         <button class="cat-chip" onclick="setCategory('MUSIC', this)">🎵 MUSIC</button>
                         <button class="cat-chip" onclick="setCategory('CUSTOM', this)">✨ CUSTOM</button>
@@ -744,7 +756,7 @@ Attitude? Bhai main sach bolta hoon bas. Sach kadwa hota hai aur tera dimaag tho
                         <span>1. TEST PROMPT (WHAT YOU ASK THE BOT):</span>
                         <span style="color: var(--neon-cyan); cursor: pointer;" onclick="loadSamplePrompt()">🎲 Insert Procedural Sample</span>
                     </div>
-                    <textarea id="userPrompt" class="input-prompt" placeholder="Ask MoggerAI anything across coding, music theory, or philosophy..."></textarea>
+                    <textarea id="userPrompt" class="input-prompt" placeholder="Ask MoggerAI anything across AAA engine architecture, Roblox Luau, game physics, coding, music theory, or philosophy..."></textarea>
                 </div>
 
                 <button class="btn-action btn-cyan" id="btnGenerate" onclick="generateResponse()">
@@ -779,6 +791,12 @@ Attitude? Bhai main sach bolta hoon bas. Sach kadwa hota hai aur tera dimaag tho
                     </div>
 
                     <div class="tags-container" id="tagList">
+                        <button class="tag-btn" onclick="toggleTag(this, 'AAA Netcode')">+ AAA Netcode</button>
+                        <button class="tag-btn" onclick="toggleTag(this, 'PBR Shaders')">+ PBR Shaders</button>
+                        <button class="tag-btn" onclick="toggleTag(this, 'Job System')">+ Job System</button>
+                        <button class="tag-btn" onclick="toggleTag(this, 'Roblox Luau')">+ Roblox Luau</button>
+                        <button class="tag-btn" onclick="toggleTag(this, 'Game Physics')">+ Game Physics</button>
+                        <button class="tag-btn" onclick="toggleTag(this, '60FPS Logic')">+ 60FPS Logic</button>
                         <button class="tag-btn" onclick="toggleTag(this, 'Deep Reasoning')">+ Deep Reasoning</button>
                         <button class="tag-btn" onclick="toggleTag(this, 'Clean Code')">+ Clean Code</button>
                         <button class="tag-btn" onclick="toggleTag(this, 'Musical Depth')">+ Musical Depth</button>
@@ -868,6 +886,9 @@ Attitude? Bhai main sach bolta hoon bas. Sach kadwa hota hai aur tera dimaag tho
 
         const PROCEDURAL_SAMPLES = {
             'CHAT': "Explain the philosophical conflict between Mathematical Platonism and Formalism in terms of Gödel's incompleteness theorems without clichés.",
+            'AAA_STUDIO': "Write a server-side lag compensation rewind buffer that restores character hitboxes to past client timestamps in Luau with zero allocation.",
+            'GAMEDEV': "Write a complete 60FPS 2D platformer jump physics loop with gravity, delta-time, and tilemap collision in HTML5 Canvas.",
+            'ROBLOX': "Write an ultra-realistic 3D FPS camera spring recoil and procedural viewmodel sway controller in Roblox Luau.",
             'CODE': "Write a thread-safe, non-blocking Python circular ring buffer for continuous PCM stereo audio streaming between coroutines.",
             'MUSIC': "Analyze the acoustic signature of Memphis Phonk: tape saturation, cowbell tuning, distorted 808 overtones, and multiband dynamic ducking.",
             'CUSTOM': "Deconstruct how you uniquely embody the Claude Fable 5 persona while running on Google's gemini-2.5-flash engine."
@@ -1146,6 +1167,12 @@ Attitude? Bhai main sach bolta hoon bas. Sach kadwa hota hai aur tera dimaag tho
                         // Update Cognitive Radar Telemetry
                         if (data.radar_metrics) {
                             const rm = data.radar_metrics;
+                            const vGame = rm.gamedev_rigor || 98;
+                            setElText('radarGameVal', `${vGame}%`);
+                            setElText('radarGameScore', `${vGame}/100`);
+                            const bGame = document.getElementById('radarGameBar');
+                            if (bGame) bGame.style.width = `${vGame}%`;
+
                             const vCode = rm.code_rigor || rm.hinglish_fluency || 95;
                             setElText('radarCodeVal', `${vCode}%`);
                             setElText('radarCodeScore', `${vCode}/100`);

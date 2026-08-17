@@ -88,6 +88,44 @@ CHAT_TASKS = [
      ["the cyclical nature of inspiration and the necessity of fertile silence", "separating intrinsic craft satisfaction from external validation metrics", "embracing constraint as the foundational catalyst of true innovation", "the irreplaceable resonance of lived human vulnerability in art", "reclaiming the sacred playfulness of unconditional creative exploration"])
 ]
 
+GAMEDEV_DOMAINS = [
+    "Ultra-Realistic 3D Roblox Luau Engineering",
+    "Roblox 2D HUD, Inventory & GUI Scripting",
+    "Roblox Spring-Physics Camera & Recoil Viewmodels",
+    "Roblox Raycast Ballistics & Server-Authoritative Anti-Exploit",
+    "Roblox Procedural IK Foot Planting & Character Rigging",
+    "HTML5 Canvas 2D & WebGL 60FPS Game Engines",
+    "Python Pygame & Ursina 3D Physics Loops",
+    "Java LibGDX & Minecraft Plugin Mechanics",
+    "C/C++ Raylib, SDL2 & OpenGL Shaders",
+    "Cache-Friendly Entity Component Systems (ECS) & Spatial Partitioning",
+    "AAA Multiplayer Netcode & Lag Rewind Compensation",
+    "AAA Cook-Torrance GGX PBR & Compute Shaders",
+    "AAA Job Systems & Fiber-Based Multithreading",
+    "AAA Motion Matching & Inverse Kinematics",
+    "AAA Dynamic AABB Tree & BVH Spatial Partitioning",
+    "AAA Unreal Engine Gameplay Ability System (GAS)",
+    "AAA Voxel Mesh Optimization & GPU Compute Meshing"
+]
+
+GAMEDEV_TASKS = [
+    ("Write an ultra-realistic 3D Roblox Luau {subject} supporting {feature}. Include clean type annotations and performant RunService loops.",
+     ["spring-driven FPS viewmodel camera controller", "raycast ballistics projectile solver with air resistance and bullet drop", "procedural 2-bone Inverse Kinematics (IK) foot-placement system", "client-server RemoteEvent weapon replication network with sanity checks", "custom raycast vehicle suspension chassis physics"],
+     ["dynamic procedural sway, walk bobbing, and camera tilt", "sub-millisecond raycast hitbox interpolation and lag compensation", "raycast terrain normal alignment and hip-height adaptation", "server-side fire-rate debounce and speed exploit mitigation", "anti-roll bar torque math and tire friction slip curves"]),
+
+    ("Architect an AAA-grade {subject} engineered for {feature}. Detail the complete implementation with zero-allocation memory guarantees.",
+     ["server-side lag compensation rewind buffer", "lock-free work-stealing job system scheduler", "WebGPU/DirectX compute shader PBR renderer", "character motion matching animation blender", "dynamic BVH broadphase collision hierarchy"],
+     ["sub-millisecond raycast hitbox interpolation across 64 networked players", "sub-microsecond fiber context switches across all CPU cores", "GGX specular microfacet distribution and split-sum IBL", "procedural 2-bone IK foot alignment and root motion trajectory warping", "SIMD-vectorized ray-box intersection tests"]),
+
+    ("Design a high-performance 2D/3D {subject} in {feature}. Provide clean production-ready code with mathematical correctness.",
+     ["swept AABB continuous collision detection solver", "spatial quadtree for 10,000 active dynamic entities", "A* grid pathfinding algorithm with line-of-sight smoothing", "2D tilemap rendering camera with sub-pixel interpolation", "zero-allocation memory pool for fast particle emitters"],
+     ["Lua (Love2D & Defold)", "HTML5 Canvas and WebGL shaders", "Python (Pygame and Ursina 3D)", "Java (LibGDX and LWJGL)", "C++ (Raylib and SDL2)"]),
+
+    ("Analyze and optimize a game engine bottleneck in {subject} where {feature}. Implement the fix with optimal frametime stability.",
+     ["Roblox Luau character state machine", "HTML5 requestAnimationFrame physics loop", "Pygame delta-time sprite rendering", "LibGDX Box2D physics simulation", "C++ OpenGL fragment lighting shader"],
+     ["draw call overhead causes severe frame drops", "garbage collection pauses stutter the 60FPS update cycle", "delta-time tunneling causes high-speed bullets to pass through walls", "state race conditions cause animation desynchronization", "spatial queries iterate over entire entity lists instead of localized partitions"])
+]
+
 class DynamicSynthesizer:
     """Generates an infinite stream of 100% unique, non-repeating, deeply complex benchmarks"""
     
@@ -98,8 +136,8 @@ class DynamicSynthesizer:
     def generate_unique_benchmark(cls) -> Dict[str, Any]:
         cls._step_counter += 1
         
-        # Balance across CODE, MUSIC, CHAT in balanced rotation
-        pillars = ["CODE", "MUSIC", "CHAT"]
+        # Balance across CODE, GAMEDEV, MUSIC, CHAT in balanced rotation
+        pillars = ["CODE", "GAMEDEV", "MUSIC", "CHAT"]
         pillar = pillars[(cls._step_counter - 1) % len(pillars)]
         
         for _ in range(50):  # Guarantee uniqueness
@@ -111,6 +149,14 @@ class DynamicSynthesizer:
                 prompt = template.format(subject=sub, feature=feat)
                 cat_name = f"[CODE] {domain} • {sub}"
                 
+            elif pillar == "GAMEDEV":
+                domain = random.choice(GAMEDEV_DOMAINS)
+                template, subs, feats = random.choice(GAMEDEV_TASKS)
+                sub = random.choice(subs)
+                feat = random.choice(feats)
+                prompt = template.format(subject=sub, feature=feat)
+                cat_name = f"[GAMEDEV] {domain} • {sub[:30]}"
+
             elif pillar == "MUSIC":
                 domain = random.choice(MUSIC_DOMAINS)
                 template, subs, feats = random.choice(MUSIC_TASKS)
@@ -152,9 +198,9 @@ class DynamicSynthesizer:
             "step_number": cls._step_counter,
             "seed_id": f"SYNTH-{cls._step_counter:04d}-EVOLVE",
             "pillar": pillar,
-            "domain": "Neural Cognition",
+            "domain": "Game Engine & Neural Cognition",
             "category": f"[{pillar}] Evolving Synthesis Step #{cls._step_counter}",
-            "prompt": f"Formulate an ultra-rigorous, deeply analytical synthesis on dynamic {pillar.lower()} systems and structural harmony.",
+            "prompt": f"Formulate an ultra-rigorous, deeply analytical synthesis on dynamic {pillar.lower()} systems, physics engines, and structural harmony.",
             "complexity_tier": 5,
             "hash": str(time.time()),
             "timestamp": time.time()

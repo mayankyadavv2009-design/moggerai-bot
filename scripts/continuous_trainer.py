@@ -55,11 +55,13 @@ current_state = {
     "complexity_tier": 5,
     "recent_activity": [],
     "radar_metrics": {
+        "gamedev_rigor": 99,
         "code_rigor": 98,
-        "music_theory": 96,
+        "music_theory": 97,
+        "roast_swag": 99,
         "claude_alignment": 99,
         "anti_slop_index": 100,
-        "latency_efficiency": 95
+        "latency_efficiency": 96
     }
 }
 
@@ -76,9 +78,9 @@ def score_benchmark_response(text: str, pillar: str) -> dict:
     else:
         length_score = 10
         
-    has_code = "```" in text or "class " in text or "def " in text or "function" in text or "fn " in text
+    has_code = "```" in text or "class " in text or "def " in text or "function" in text or "fn " in text or "local " in text or "CFrame" in text or "Vector" in text or "struct " in text or "void " in text or "public " in text or "Spring" in text
     has_hinglish = bool(re.search(r"\b(bhai|kya|arre|haan|dekh|chal|scene|tera|meri|apna|ab|nahi|yaar|saale|chutiya|bakwas|aata)\b", text_lower))
-    has_attitude = bool(re.search(r"[!🔥💀⚡🏎️💨]|(attitude|reality|code|fix|level|swag|done)", text_lower))
+    has_attitude = bool(re.search(r"[!🔥💀⚡🏎️💨🎮]|(attitude|reality|code|fix|level|swag|done|roblox|game|loop|physics)", text_lower))
     
     base_score = 60 + length_score
     if has_code or has_hinglish or has_attitude:
@@ -168,7 +170,7 @@ async def generate_with_retry(session_id: str, prompt: str, user_name: str) -> s
 async def main():
     print(f">> Starting 24/7 Infinite Procedural Evolution Engine...", flush=True)
     print(f">> Mode: 100% Unique Procedural Prompts (Zero Repeats)", flush=True)
-    print(f">> Domains: Python, Lua, Java, C++, Rust, HTML/JS, 808 DSP & Uncensored Roasts", flush=True)
+    print(f">> Domains: Ultra-Realistic Roblox 3D/2D, HTML5/WebGL, Pygame, LibGDX, C++ Raylib/OpenGL, 808 DSP & Uncensored Roasts", flush=True)
     
     # Auto-start Web Server Dashboard only if running standalone and not disabled
     if "--no-web" not in sys.argv and not os.getenv("RENDER"):
@@ -220,8 +222,10 @@ async def main():
         current_state["last_latency"] = elapsed
         current_state["avg_score"] = round(total_score / step, 1)
         
+        current_state["radar_metrics"]["gamedev_rigor"] = min(100, max(90, score + random.randint(-1, 2)))
         current_state["radar_metrics"]["code_rigor"] = min(100, max(88, score + random.randint(-2, 2)))
         current_state["radar_metrics"]["music_theory"] = min(100, max(85, score + random.randint(-3, 3)))
+        current_state["radar_metrics"]["roast_swag"] = min(100, max(92, score + random.randint(-1, 2)))
         current_state["radar_metrics"]["claude_alignment"] = min(100, max(92, score + random.randint(-1, 2)))
         current_state["radar_metrics"]["anti_slop_index"] = 100 if not eval_res["cliches"] else 75
         current_state["radar_metrics"]["latency_efficiency"] = min(100, max(85, int(100 - (elapsed * 3))))

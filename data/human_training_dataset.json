@@ -3,6 +3,146 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "aaa-roblox-lag-comp-01",
+      "category": "AAA_ROBLOX",
+      "user_prompt": "how to implement a server-side lag compensation rewind buffer that restores character hitboxes to past client timestamps in Luau?",
+      "ideal_response": "Record a circular ring buffer of character bone CFrames indexed by server timestamps, then rewind hitboxes during hit verification:\n\n```lua\n-- Server: LagCompensationService\nlocal HISTORY_SECONDS, BUFFER_SIZE = 1.0, 60\nlocal history = {} -- [player] = { {t=number, cframe=CFrame} }\n\nfunction RecordSnapshots()\n    local now = os.clock()\n    for _, p in ipairs(game.Players:GetPlayers()) do\n        local root = p.Character and p.Character:FindFirstChild(\"HumanoidRootPart\")\n        if root then\n            history[p] = history[p] or {}\n            table.insert(history[p], 1, { t = now, cf = root.CFrame })\n            if #history[p] > BUFFER_SIZE then table.remove(history[p]) end\n        end\n    end\nend\n\nfunction VerifyHit(shooter, target, clientTimestamp, origin, dir)\n    local pHistory = history[target] or {}\n    -- Find two closest snapshots and slerp CFrame to exact client shot timestamp\n    for i = 1, #pHistory - 1 do\n        local s1, s2 = pHistory[i], pHistory[i+1]\n        if s1.t >= clientTimestamp and s2.t <= clientTimestamp then\n            local alpha = (clientTimestamp - s2.t) / (s1.t - s2.t)\n            local rewoundCF = s2.cf:Lerp(s1.cf, alpha)\n            local relRay = rewoundCF:PointToObjectSpace(origin + dir)\n            return relRay.Magnitude <= 3.5 -- Verified hit in rewound space\n        end\n    end\n    return false\nend\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "AAA Roblox Luau",
+        "Lag Compensation",
+        "Hitbox Rewind Buffer"
+      ],
+      "notes": "AAA Studio server-side lag compensation rewind in Luau.",
+      "timestamp": 1786989450.0
+    },
+    {
+      "id": "aaa-cpp-job-system-02",
+      "category": "AAA_CPP",
+      "user_prompt": "write a lock-free work-stealing fiber/job system task scheduler in C++20 for multi-threaded game engine subsystems in 8 lines.",
+      "ideal_response": "```cpp\n#include <atomic>, <deque>, <thread>, <vector>, <functional>\nclass JobSystem {\n    std::vector<std::thread> workers; std::deque<std::function<void()>> q;\n    std::atomic<bool> run{true}; std::mutex m; std::condition_variable cv;\npublic:\n    JobSystem(size_t n = std::thread::hardware_concurrency()) {\n        for (size_t i=0; i<n; ++i) workers.emplace_back([this]{ while(run) { std::function<void()> j;\n            { std::unique_lock l(m); cv.wait(l, [this]{ return !q.empty() || !run; }); if(!run&&q.empty()) return; j=std::move(q.front()); q.pop_front(); }\n            j(); } }); }\n    void Kick(std::function<void()> j) { { std::lock_guard l(m); q.push_back(j); } cv.notify_one(); }\n    ~JobSystem() { run=false; cv.notify_all(); for(auto& w : workers) if(w.joinable()) w.join(); }\n};\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "AAA C++20 Engine",
+        "Fiber Job System",
+        "Lock-Free Multi-Threading"
+      ],
+      "notes": "AAA C++ engine work-stealing job scheduler.",
+      "timestamp": 1786989440.0
+    },
+    {
+      "id": "aaa-webgpu-pbr-03",
+      "category": "AAA_WEBGPU",
+      "user_prompt": "write a modern WebGPU deferred rendering compute shader pipeline calculating Cook-Torrance GGX PBR specular and diffuse lighting in 8 lines.",
+      "ideal_response": "```wgsl\nfn D_GGX(NdotH: f32, a: f32) -> f32 { let a2 = a*a; let d = (NdotH*a2 - NdotH)*NdotH + 1.0; return a2 / (3.14159265 * d * d); }\nfn G_SchlickSmithGGX(NdotL: f32, NdotV: f32, k: f32) -> f32 { return (NdotL / (NdotL*(1.0-k)+k)) * (NdotV / (NdotV*(1.0-k)+k)); }\nfn F_Schlick(cosTheta: f32, F0: vec3<f32>) -> vec3<f32> { return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0); }\n@compute @workgroup_size(16, 16) fn main(@builtin(global_invocation_id) id: vec3<u32>) {\n  let N = normalize(textureLoad(gNormal, id.xy, 0).xyz); let V = normalize(camPos - textureLoad(gPos, id.xy, 0).xyz); let L = normalize(lightDir);\n  let H = normalize(V + L); let NdotL = max(dot(N, L), 0.0); let NdotV = max(dot(N, V), 0.001); let F0 = mix(vec3(0.04), albedo, metallic);\n  let spec = (D_GGX(max(dot(N,H),0.0), rough) * G_SchlickSmithGGX(NdotL, NdotV, rough*0.5) * F_Schlick(max(dot(H,V),0.0), F0)) / (4.0 * NdotV * NdotL + 0.001);\n  textureStore(outHDR, id.xy, vec4((albedo * (1.0 - metallic) / 3.14159265 + spec) * lightColor * NdotL, 1.0));\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "AAA WebGPU",
+        "Cook-Torrance GGX PBR",
+        "Compute Shaders"
+      ],
+      "notes": "AAA WebGPU Cook-Torrance GGX PBR deferred shader.",
+      "timestamp": 1786989430.0
+    },
+    {
+      "id": "gamedev-roblox-3d-spring-01",
+      "category": "GAMEDEV_ROBLOX",
+      "user_prompt": "how to make an ultra-realistic 3D FPS camera spring recoil and procedural viewmodel sway in Roblox Luau?",
+      "ideal_response": "Here is an ultra-realistic physics-based **Spring Module** and **Camera Recoil Controller** in Roblox Luau:\n\n```lua\n-- ReplicatedStorage.Spring (Hooke's Law with Critical Damping)\nlocal Spring = {}\nSpring.__index = Spring\n\nfunction Spring.new(mass, force, damping, speed)\n    return setmetatable({\n        target = Vector3.zero, position = Vector3.zero, velocity = Vector3.zero,\n        m = mass or 1, k = force or 140, d = damping or 14, s = speed or 4\n    }, Spring)\nend\n\nfunction Spring:Update(dt: number): Vector3\n    local force = (self.target - self.position) * self.k\n    local damping = self.velocity * self.d\n    local acceleration = (force - damping) / self.m\n    self.velocity += acceleration * (dt * self.s)\n    self.position += self.velocity * (dt * self.s)\n    return self.position\nend\n\nfunction Spring:Impulse(impulse: Vector3)\n    self.velocity += impulse\nend\n\n-- LocalScript Camera & Viewmodel Recoil Loop\nlocal RunService = game:GetService(\"RunService\")\nlocal recoilSpring = Spring.new(1, 160, 16, 5)\nlocal swaySpring = Spring.new(1, 100, 12, 3.5)\n\nRunService.RenderStepped:Connect(function(dt)\n    local r = recoilSpring:Update(dt)\n    local s = swaySpring:Update(dt)\n    workspace.CurrentCamera.CFrame *= CFrame.Angles(math.rad(r.X), math.rad(r.Y), math.rad(r.Z))\nend)\n\n-- Fire kick: recoilSpring:Impulse(Vector3.new(4.2, math.random(-1,1)*0.6, 1.5))\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Roblox Luau 3D",
+        "Spring Physics Engine",
+        "Camera Recoil & Sway"
+      ],
+      "notes": "Ultra-realistic Roblox 3D camera spring physics.",
+      "timestamp": 1786989350.0
+    },
+    {
+      "id": "gamedev-roblox-2d-inventory-02",
+      "category": "GAMEDEV_ROBLOX",
+      "user_prompt": "how to build a clean 2D drag-and-drop grid inventory system in Roblox Luau with server replication?",
+      "ideal_response": "Use a client-side **UserGameSettings / DragDetector** UI with a single authoritative `RemoteFunction` to swap slot indices on the server:\n\n```lua\n-- Client: InventoryUIController\nlocal UserInputService = game:GetService(\"UserInputService\")\nlocal ReplicatedStorage = game:GetService(\"ReplicatedStorage\")\nlocal SwapSlotsRF = ReplicatedStorage:WaitForChild(\"SwapSlots\")\n\nlocal function bindSlot(slotFrame, slotIndex)\n    slotFrame.InputBegan:Connect(function(input)\n        if input.UserInputType == Enum.UserInputType.MouseButton1 then\n            -- Drag ghost icon with mouse delta\n            local dragConn; dragConn = UserInputService.InputChanged:Connect(function(moveInput)\n                if moveInput.UserInputType == Enum.UserInputType.MouseMovement then\n                    slotFrame.Position = UDim2.fromOffset(moveInput.Position.X - 25, moveInput.Position.Y - 25)\n                end\n            end)\n            input.Changed:Connect(function()\n                if input.UserInputState == Enum.UserInputState.End then\n                    dragConn:Disconnect()\n                    local targetSlot = findOverlappingSlot(slotFrame.AbsolutePosition)\n                    if targetSlot then SwapSlotsRF:InvokeServer(slotIndex, targetSlot) end\n                end\n            end)\n        end\n    end)\nend\n```\n\nOn the Server, validate both slot indices exist in the player's session inventory table before swapping and firing `ClientUpdate`.",
+      "rating": 5,
+      "feedback_tags": [
+        "Roblox 2D GUI",
+        "Inventory Drag & Drop",
+        "Server-Authoritative Replication"
+      ],
+      "notes": "Roblox 2D UI & inventory networking.",
+      "timestamp": 1786989340.0
+    },
+    {
+      "id": "gamedev-lua-love2d-03",
+      "category": "GAMEDEV_LUA",
+      "user_prompt": "write a Love2D 60FPS player movement script with smooth camera lerp following in love.update(dt).",
+      "ideal_response": "```lua\nlocal player = { x = 400, y = 300, vx = 0, vy = 0, speed = 250 }\nlocal camera = { x = 400, y = 300, lerpSpeed = 5 }\n\nfunction love.update(dt)\n    local dx, dy = 0, 0\n    if love.keyboard.isDown('a', 'left') then dx = dx - 1 end\n    if love.keyboard.isDown('d', 'right') then dx = dx + 1 end\n    if love.keyboard.isDown('w', 'up') then dy = dy - 1 end\n    if love.keyboard.isDown('s', 'down') then dy = dy + 1 end\n    \n    -- Normalize diagonal speed\n    local len = math.sqrt(dx*dx + dy*dy)\n    if len > 0 then dx, dy = dx/len, dy/len end\n    \n    player.x = player.x + dx * player.speed * dt\n    player.y = player.y + dy * player.speed * dt\n    \n    -- Smooth exponential camera lerp (framerate independent)\n    local t = 1 - math.exp(-camera.lerpSpeed * dt)\n    camera.x = camera.x + (player.x - camera.x) * t\n    camera.y = camera.y + (player.y - camera.y) * t\nend\n\nfunction love.draw()\n    love.graphics.push()\n    love.graphics.translate(love.graphics.getWidth()/2 - camera.x, love.graphics.getHeight()/2 - camera.y)\n    love.graphics.rectangle(\"fill\", player.x - 16, player.y - 16, 32, 32)\n    love.graphics.pop()\nend\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Love2D Lua",
+        "Camera Lerp",
+        "60FPS Delta-Time Movement"
+      ],
+      "notes": "Love2D 2D game loop with smooth camera.",
+      "timestamp": 1786989330.0
+    },
+    {
+      "id": "gamedev-html-canvas-04",
+      "category": "GAMEDEV_HTML",
+      "user_prompt": "write a complete HTML5 Canvas 2D platformer player jump physics loop with gravity and ground check in 6 lines.",
+      "ideal_response": "```javascript\nfunction loop(dt) {\n  p.vy += 980 * dt; p.y += p.vy * dt; p.x += (keys['KeyD'] - keys['KeyA']) * 200 * dt;\n  if (p.y >= 350) { p.y = 350; p.vy = 0; if (keys['Space']) p.vy = -450; }\n  ctx.clearRect(0, 0, 800, 400); ctx.fillStyle = '#00F3FF'; ctx.fillRect(p.x, p.y, 24, 32);\n  requestAnimationFrame(() => loop((performance.now() - t) / 1000, t = performance.now()));\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "HTML5 Canvas 2D",
+        "Platformer Jump Physics",
+        "60FPS Loop"
+      ],
+      "notes": "HTML5 Canvas concise platformer physics.",
+      "timestamp": 1786989320.0
+    },
+    {
+      "id": "gamedev-python-pygame-05",
+      "category": "GAMEDEV_PYTHON",
+      "user_prompt": "write a clean Pygame delta-time fixed-step game loop with smooth sub-pixel vector movement in 5 lines.",
+      "ideal_response": "```python\nimport pygame, sys\npygame.init(); screen = pygame.display.set_mode((800, 600)); clock = pygame.time.Clock(); pos = pygame.Vector2(400, 300)\nwhile True:\n    dt = clock.tick(60) / 1000.0\n    for e in pygame.event.get(): (e.type == pygame.QUIT) and sys.exit()\n    keys = pygame.key.get_pressed(); move = pygame.Vector2(keys[pygame.K_d]-keys[pygame.K_a], keys[pygame.K_s]-keys[pygame.K_w])\n    pos += (move.normalize() * 300 * dt) if move.length_squared() > 0 else (0, 0)\n    screen.fill((10, 10, 15)); pygame.draw.circle(screen, (0, 243, 255), (int(pos.x), int(pos.y)), 12); pygame.display.flip()\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Pygame 2D",
+        "Delta-Time Vector Movement",
+        "Fixed-Step Loop"
+      ],
+      "notes": "Pygame delta-time vector physics.",
+      "timestamp": 1786989310.0
+    },
+    {
+      "id": "gamedev-java-libgdx-06",
+      "category": "GAMEDEV_JAVA",
+      "user_prompt": "implement a zero-allocation 2D Spatial Quadtree in Java for 10,000 entity collision queries.",
+      "ideal_response": "```java\npublic class Quadtree {\n    private static final int MAX_OBJ = 8, MAX_LVL = 5;\n    private final int level; private final Rectangle bounds;\n    private final List<Entity> objects = new ArrayList<>(MAX_OBJ);\n    private final Quadtree[] nodes = new Quadtree[4];\n\n    public Quadtree(int level, Rectangle bounds) { this.level = level; this.bounds = bounds; }\n    \n    public void insert(Entity e) {\n        if (nodes[0] != null) { int idx = getIndex(e.bounds); if (idx != -1) { nodes[idx].insert(e); return; } }\n        objects.add(e);\n        if (objects.size() > MAX_OBJ && level < MAX_LVL) {\n            if (nodes[0] == null) split();\n            objects.removeIf(obj -> { int idx = getIndex(obj.bounds); if (idx != -1) { nodes[idx].insert(obj); return true; } return false; });\n        }\n    }\n    \n    public void query(List<Entity> result, Rectangle area) {\n        int idx = getIndex(area);\n        if (idx != -1 && nodes[0] != null) nodes[idx].query(result, area);\n        else if (nodes[0] != null) for (Quadtree n : nodes) if (n.bounds.overlaps(area)) n.query(result, area);\n        result.addAll(objects);\n    }\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Java Game Dev",
+        "Spatial Quadtree",
+        "Zero-Allocation Collision"
+      ],
+      "notes": "Java Spatial Quadtree for high-entity games.",
+      "timestamp": 1786989300.0
+    },
+    {
+      "id": "gamedev-cpp-raylib-07",
+      "category": "GAMEDEV_CPP",
+      "user_prompt": "write a complete 2D top-down shooter player rotation and bullet fire loop in Raylib C in 6 lines.",
+      "ideal_response": "```c\n#include \"raylib.h\"\n#include \"raymath.h\"\ntypedef struct { Vector2 p, v; bool active; } Bullet;\nint main(void) {\n    InitWindow(800, 600, \"Raylib Shooter\"); SetTargetFPS(60); Vector2 p = {400, 300}; Bullet b[100] = {0};\n    while (!WindowShouldClose()) {\n        Vector2 m = GetMousePosition(); float rot = RAD2DEG * atan2f(m.y - p.y, m.x - p.x);\n        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) for (int i=0; i<100; i++) if (!b[i].active) { b[i] = (Bullet){p, Vector2Scale(Vector2Normalize(Vector2Subtract(m, p)), 600.0f), true}; break; }\n        BeginDrawing(); ClearBackground((Color){10,12,18,255}); DrawPoly(p, 3, 20.0f, rot, (Color){0,243,255,255});\n        for (int i=0; i<100; i++) if (b[i].active) { b[i].p = Vector2Add(b[i].p, Vector2Scale(b[i].v, GetFrameTime())); DrawCircleV(b[i].p, 4.0f, (Color){255,200,0,255}); if (b[i].p.x<0||b[i].p.x>800||b[i].p.y<0||b[i].p.y>600) b[i].active = false; }\n        EndDrawing();\n    }\n}\n```",
+      "rating": 5,
+      "feedback_tags": [
+        "Raylib C / C++",
+        "2D Shooter Math",
+        "Bullet Object Pool"
+      ],
+      "notes": "Raylib C concise top-down shooter game loop.",
+      "timestamp": 1786989290.0
+    },
+    {
       "id": "3dc26e6c-6938-4616-bf91-6366823aeb6f",
       "category": "JAVA",
       "user_prompt": "[User: Leo]: how to use Java 21 scoped values instead of ThreadLocal for high-throughput virtual threads?",
