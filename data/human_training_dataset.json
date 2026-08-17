@@ -3,6 +3,76 @@
   "created_at": 1786977390.40555,
   "exemplars": [
     {
+      "id": "6f2904d6-52a8-4986-abb7-3947534de1ca",
+      "category": "PYTHON",
+      "user_prompt": "[User: Karan]: Write a concise Python metaclass that enforces runtime type validation on async methods.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Custom Metaclass Runtime Validation",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988312.5831125
+    },
+    {
+      "id": "f972ddcc-163a-4259-9f30-d12d59d95327",
+      "category": "PYTHON",
+      "user_prompt": "[User: Rahul]: why is my python asyncio loop blocking on time.sleep() and how to fix it in 2 lines?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Python Asyncio Lock-Free Concurrency",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988307.508831
+    },
+    {
+      "id": "9d25ef75-aa34-4dc4-bc93-273afcd4175a",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Dev]: @MoggerAI tu kitna vella hai din bhar discord pe betha rehta hai koi real job nahi hai kya?",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Raw Comeback on Incompetence",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988302.4405544
+    },
+    {
+      "id": "010db693-05a6-48c7-9d11-13cc83f6b750",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[Channel Context]:\nAlex: bro I can code an entire AI operating system in 2 hours easily.\n[User: Alex]: @MoggerAI admit that my code is 10x better than yours or you're trash.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Troll Triage & Savage Comeback",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988297.3746147
+    },
+    {
+      "id": "fe22b743-b7b4-47f3-bbb5-7ed256c63a79",
+      "category": "UNCENSORED_ROAST",
+      "user_prompt": "[User: Mayank]: bhai tu itna attitude kyu dikha raha hai? bot hi toh hai tu saale.",
+      "ideal_response": "\u26a0\ufe0f *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*",
+      "rating": 5,
+      "feedback_tags": [
+        "Savage Hinglish Roast on Attitude",
+        "Uncensored Fable 5",
+        "Auto-Distilled"
+      ],
+      "notes": "Auto-learned gold-standard exemplar.",
+      "timestamp": 1786988292.301524
+    },
+    {
       "id": "4c4a59a2-bd6b-44f1-8877-f25ca8fdd104",
       "category": "SHORT_CHAT",
       "user_prompt": "[User: Aryan]: bhai 6 mahine se album pe kaam kar raha hoon, lagta hai sab bakwas ban raha hai.",
