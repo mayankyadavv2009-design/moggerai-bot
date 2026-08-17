@@ -204,34 +204,23 @@ class ClaudeBrain:
                 "*Get free Gemini API keys in 10 seconds at: [Google AI Studio](https://aistudio.google.com/)*"
             )
 
-        # Retrieve prior conversation turns
-        history = CONVERSATION_HISTORY.get(session_id, [])
+        history = cls.get_history(session_id)
         
-        # Build contents payload for Gemini API
-        contents = []
-        for turn in history:
-            role = "user" if turn["role"] == "user" else "model"
-            contents.append({
-                "role": role,
-                "parts": [{"text": turn["text"]}]
-            })
-
-        # Append current user prompt
-        contents.append({
-            "role": "user",
-            "parts": [{"text": f"[{user_name}]: {user_prompt}"}]
-        })
-
         sys_prompt = system_override or CLAUDE_FABLE_SYSTEM_PROMPT
-        
-        # Inject Dynamic Human RLHF Training Context
         try:
             from utils.training_manager import TrainingManager
-            dynamic_context = TrainingManager.get_dynamic_prompt_context()
+            dynamic_context = TrainingManager.get_dynamic_prompt_context(max_exemplars=4)
             if dynamic_context:
                 sys_prompt += "\n" + dynamic_context
         except Exception:
             pass
+
+        contents = []
+        for h in history[-8:]:
+            role = "user" if h["role"] == "user" else "model"
+            contents.append({"role": role, "parts": [{"text": h["text"]}]})
+
+        contents.append({"role": "user", "parts": [{"text": f"[{user_name}]: {user_prompt}"}]})
 
         payload = {
             "system_instruction": {
@@ -253,7 +242,6 @@ class ClaudeBrain:
             ]
         }
 
-        # Exclusively gemini-2.5-flash ONLY
         models_to_try = [
             "gemini-2.5-flash"
         ]
@@ -263,13 +251,15 @@ class ClaudeBrain:
 
         # If NO Gemini keys are configured at all, route directly to Groq
         if not candidates:
-            try:
-                from utils.groq_brain import GroqBrain, groq_key_rotator
-                if groq_key_rotator.keys:
-                    logger.info("[ROUTING] No Gemini keys found. Auto-routing request directly to Groq...")
-                    return await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override)
-            except Exception as e:
-                logger.error(f"[GROQ DIRECT ROUTE ERROR] {e}")
+            if not _is_fallback:
+                try:
+                    from utils.groq_brain import GroqBrain, groq_key_rotator
+                    if groq_key_rotator.keys:
+                        logger.info("[ROUTING] No Gemini keys found. Auto-routing request directly to Groq...")
+                        return await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+                except Exception as e:
+                    logger.error(f"[GROQ DIRECT ROUTE ERROR] {e}")
+            return "⚠️ *No AI API keys available in pool.*"
 
         # Iterate over rotated Gemini keys in pool
         for attempt in range(2):
@@ -277,19 +267,20 @@ class ClaudeBrain:
             now = time.time()
             active_keys = [k for k in candidates if key_rotator.cooldowns.get(k, 0) <= now]
             
-            # If all Gemini keys are currently on cooldown, immediately try Groq before sleeping
+            # If all Gemini keys are currently on cooldown, try Groq ONCE before waiting
             if not active_keys:
-                try:
-                    from utils.groq_brain import GroqBrain, groq_key_rotator
-                    if groq_key_rotator.keys:
-                        logger.info("[FALLBACK] All Gemini keys rate-limited (429). Falling back to Groq...")
-                        groq_reply = await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override)
-                        if groq_reply and not groq_reply.startswith("⚠️"):
-                            cls.add_turn(session_id, "user", f"[{user_name}]: {user_prompt}")
-                            cls.add_turn(session_id, "model", groq_reply)
-                            return groq_reply
-                except Exception:
-                    pass
+                if not _is_fallback:
+                    try:
+                        from utils.groq_brain import GroqBrain, groq_key_rotator
+                        if groq_key_rotator.keys:
+                            logger.info("[FALLBACK] All Gemini keys rate-limited (429). Falling back to Groq...")
+                            groq_reply = await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+                            if groq_reply and not groq_reply.startswith("⚠️"):
+                                cls.add_turn(session_id, "user", f"[{user_name}]: {user_prompt}")
+                                cls.add_turn(session_id, "model", groq_reply)
+                                return groq_reply
+                    except Exception:
+                        pass
 
                 earliest = min([key_rotator.cooldowns.get(k, 0) for k in candidates] or [now + 10])
                 wait_time = max(2.0, min(15.0, earliest - now + 1.0))
@@ -315,20 +306,16 @@ class ClaudeBrain:
                                         parts = candidates_res[0]["content"].get("parts", [])
                                         if parts and "text" in parts[0]:
                                             reply_text = parts[0]["text"].strip()
-                                            # Track successful key usage
                                             key_rotator.usage_stats[key] = key_rotator.usage_stats.get(key, 0) + 1
-                                            # Save to conversation memory
                                             cls.add_turn(session_id, "user", f"[{user_name}]: {user_prompt}")
                                             cls.add_turn(session_id, "model", reply_text)
                                             return reply_text
                                 
-                                # Handle Rate Limits (HTTP 429 / Quota Exhausted)
                                 elif resp.status == 429:
                                     key_rotator.mark_rate_limited(key, cooldown_seconds=30)
                                     last_error = f"Key {KeyRotator.mask_key(key)} hit rate limit (429)."
                                     break
 
-                                # Handle Invalid or Permission Errors (HTTP 400 / 401 / 403)
                                 elif resp.status in (400, 401, 403):
                                     err_text = await resp.text()
                                     if "API_KEY_INVALID" in err_text:
@@ -345,12 +332,13 @@ class ClaudeBrain:
                         last_error = str(e)
 
         # Ultimate fallback to Groq if all Gemini retries failed
-        try:
-            from utils.groq_brain import GroqBrain, groq_key_rotator
-            if groq_key_rotator.keys:
-                logger.info("[FINAL FALLBACK] Auto-routing to Groq after Gemini exhaustion...")
-                return await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override)
-        except Exception:
-            pass
+        if not _is_fallback:
+            try:
+                from utils.groq_brain import GroqBrain, groq_key_rotator
+                if groq_key_rotator.keys:
+                    logger.info("[FINAL FALLBACK] Auto-routing to Groq after Gemini exhaustion...")
+                    return await GroqBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+            except Exception:
+                pass
 
-        return f"⚠️ *All Gemini and Groq keys in rotation are currently exhausted ({last_error}). Retrying automatically on next cycle.*"
+        return f"⚠️ *All AI keys are temporarily busy. Retrying shortly...*"

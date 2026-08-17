@@ -32,7 +32,12 @@ class GroqKeyRotator:
                 return key
         return self.keys[0]
 
-    def mark_rate_limited(self, key: str, cooldown_seconds: float = 30.0):
+    def has_available_key(self) -> bool:
+        self.reload()
+        now = time.time()
+        return any(self.cooldowns.get(k, 0) <= now for k in self.keys)
+
+    def mark_rate_limited(self, key: str, cooldown_seconds: float = 20.0):
         self.cooldowns[key] = time.time() + cooldown_seconds
         logger.warning(f"[GROQ ROTATOR] Key {key[:10]}... rate-limited. Cooldown: {cooldown_seconds}s")
 
@@ -66,14 +71,17 @@ class GroqBrain:
         user_prompt: str,
         user_name: str = "Tester",
         system_override: Optional[str] = None,
-        model_name: Optional[str] = None
+        model_name: Optional[str] = None,
+        _is_fallback: bool = False
     ) -> str:
         groq_key = groq_key_rotator.get_next_key()
         
         # If no Groq key is found in .env, gracefully fallback to ClaudeBrain (Gemini)
-        if not groq_key:
-            from utils.claude_brain import ClaudeBrain
-            return await ClaudeBrain.generate_response(session_id, user_prompt, user_name, system_override)
+        if not groq_key or not groq_key_rotator.keys:
+            if not _is_fallback:
+                from utils.claude_brain import ClaudeBrain
+                return await ClaudeBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+            return "⚠️ *Groq key not configured and Gemini is offline.*"
 
         sys_prompt = system_override or GROQ_SYSTEM_PROMPT
         try:
@@ -100,14 +108,14 @@ class GroqBrain:
                     {"role": "user", "content": f"[{user_name}]: {user_prompt}"}
                 ],
                 "temperature": 0.85,
-                "max_tokens": 2048
+                "max_tokens": 1024
             }
 
             url = "https://api.groq.com/openai/v1/chat/completions"
 
-            async with aiohttp.ClientSession() as session:
-                try:
-                    async with session.post(url, headers=headers, json=payload, timeout=aiohttp.ClientTimeout(total=15)) as resp:
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(url, headers=headers, json=payload, timeout=aiohttp.ClientTimeout(total=12)) as resp:
                         if resp.status == 200:
                             data = await resp.json()
                             reply = data["choices"][0]["message"]["content"].strip()
@@ -116,16 +124,22 @@ class GroqBrain:
                             groq_key_rotator.usage_stats[groq_key] = groq_key_rotator.usage_stats.get(groq_key, 0) + 1
                             return reply
                         elif resp.status == 429:
-                            groq_key_rotator.mark_rate_limited(groq_key, 30.0)
+                            groq_key_rotator.mark_rate_limited(groq_key, 20.0)
                             break
                         else:
                             err_text = await resp.text()
-                            logger.error(f"[GROQ ERROR] Model {model} status {resp.status}: {err_text[:120]}")
+                            logger.error(f"[GROQ ERROR] Model {model} status {resp.status}: {err_text[:100]}")
                             continue
-                except Exception as e:
-                    logger.error(f"[GROQ EXCEPTION] {e}")
-                    continue
+            except Exception as e:
+                logger.error(f"[GROQ EXCEPTION] {e}")
+                continue
 
-        # Fallback to Gemini if Groq fails
-        from utils.claude_brain import ClaudeBrain
-        return await ClaudeBrain.generate_response(session_id, user_prompt, user_name, system_override)
+        # If Groq attempt failed and we are NOT in fallback mode, try Gemini ONCE
+        if not _is_fallback:
+            try:
+                from utils.claude_brain import ClaudeBrain
+                return await ClaudeBrain.generate_response(session_id, user_prompt, user_name, system_override, _is_fallback=True)
+            except Exception:
+                pass
+
+        return "⚠️ *All Groq models and backup keys are currently on cooldown (429). Retrying shortly...*"
